@@ -1,0 +1,22 @@
+{
+  "name": "projet-alarme-volta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run electron",
+    "electron": "electron .",
+    "react": "cd client && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "electron": "^24.3.0",
+    "sqlite3": "^5.1.6"
+  }
+}
