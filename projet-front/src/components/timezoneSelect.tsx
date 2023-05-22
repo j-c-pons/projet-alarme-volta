@@ -1,4 +1,4 @@
-// import "./AnalogClock.css";
+import "../style/clock.css";
 // import { FcAlarmClock } from "react-icons/fc";
 // import { AlarmContext } from "../context/ContextAlarm";
 import React, { useState } from 'react'
@@ -32,15 +32,15 @@ const TimeZone: React.FunctionComponent<tzProps> = ({updateTZ}) => {
       }
 
       return (
-        <div className="App">
+        <div className="tzBlock">
           {/* <h2>react-timezone-select</h2> */}
           {/* <blockquote>Please make a selection</blockquote> */}
-          <div className="select-wrapper">
-            <TimezoneSelect
+            {/* <select className='test'></select> */}
+            <TimezoneSelect className='deux'
               value={selectedTimezone}
               onChange={handleChange}
+              labelStyle="abbrev"
             />
-          </div>
           {/* <h3>Output:</h3> */}
           {/* <div
             style={{

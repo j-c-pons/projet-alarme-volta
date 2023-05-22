@@ -1,5 +1,16 @@
+@font-face {
+  font-family: "clock-font";   /*Can be any text*/
+  src: local("digital-7"),
+    url("../font/digital-7.ttf") format("truetype");
+}
+
 .App {
   text-align: center;
+  background-color: black;
+  height: 100%;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .App-logo {
@@ -37,3 +48,5 @@
     transform: rotate(360deg);
   }
 }
+
+

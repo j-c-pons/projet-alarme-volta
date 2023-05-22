@@ -4,18 +4,20 @@ import {useGlobalContext} from '../context/appContext';
 import useGetAlarmsService from '../service/getAlarms';
 import AlarmItm from './alarmItm';
 import usePostAlarmService from '../service/postAlarm';
-import Alarm from "../todeletecomp/alarm";
+// import Alarm from "../todeletecomp/alarm";
+import '../style/clock.css';
+// import ToggleButtons from "./toggleDays"
 
 // import SwalSettings from '../service/swalSettings'
 
 const CurrentAlarms: React.FunctionComponent = () => {
     const {result, data, setData, chromeCheck} = useGetAlarmsService();
-    const [time, setTime] = useState('');
+    // const [time, setTime] = useState('');
     const {service, postAlarm} = usePostAlarmService();
     // const [chromeCheck, setChromeCheck] = useState(true);
-    const [test, setTest] = useState(true);
+    // const [test, setTest] = useState(true);
     const inputRef = useRef<HTMLInputElement | null>(null);
-
+    const alarmCtx= useGlobalContext();
 
     const addAlarm = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -23,6 +25,8 @@ const CurrentAlarms: React.FunctionComponent = () => {
           const res = await postAlarm(inputRef.current.value);
           let newData = {id: res.alarm_id, time:inputRef.current.value, active:true} ;
           setData((prevData)=>[...prevData, newData]);
+          inputRef.current.value="";
+          console.log("ok")
         }
         //TODO else
         //todo move to another comp
@@ -34,14 +38,15 @@ const CurrentAlarms: React.FunctionComponent = () => {
       );
     }
 
-    return <div>
-      <div>
-            <input type="time"  ref={inputRef} />
-            <button onClick={addAlarm}>Save</button>
+    return <div className="text">
+      {/* <div>
+            <input className="newAlarmInput" type="time"  ref={inputRef} />
+            <ToggleButtons />
+            <button className="newAlarmInput saveBtn" onClick={addAlarm}>Save</button>
             {service.status === 'loading' && <div>Sending...</div>}
             {service.status === 'loaded' && <div>Alarm submitted</div>}
             {service.status === 'error' && <div>Error message</div>}
-      </div>
+      </div> */}
       <div>Current Alarms:</div>
       {result.status === 'loading' && <div>Loading...</div>}
       {result.status === 'loaded' && data &&

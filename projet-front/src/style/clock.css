@@ -1,0 +1,181 @@
+.clock{
+    color: red;
+    font-family: "clock-font" ;
+    font-size:30px;
+}
+
+.clock_center{
+    font-size:150px;
+}
+
+.text{
+    color: red;
+}
+
+select{
+    color:red;
+    font-size: 30px;
+    background-color: black;
+    border-color: red;
+}
+
+.test{
+    color:red;
+    font-size: 30px;
+    background-color: black;
+    border-color: red;
+}
+
+.css-13cymwt-control{
+    color:red;
+    font-size: 30px;
+    background-color: black;
+    border-color: red; 
+}
+
+.css-1xc3v61-indicatorContainer{
+    color:red !important;
+
+}
+
+.css-1u9des2-indicatorSeparator{
+    background-color:red !important;
+
+}
+
+.deux{
+    width: 50%;
+}
+
+.deux span {
+    background-color: red !important;
+    /* font-family: monospace; */
+  }
+
+.css-13cymwt-control{
+    font-size: 10px;
+}
+
+.css-13cymwt-control{
+    background-color: black !important;
+    color: red !important;
+    border-color: red !important;
+
+}
+.css-t3ipsp-control{
+    border-color: red !important;
+
+}
+
+.css-t3ipsp-control:hover{
+    border-color: red !important;
+
+}
+.css-qbdosj-Input{
+    color:red !important;
+}
+
+.css-1dimb5e-singleValue{
+    color:red !important;
+}
+
+.css-1nmdiq5-menu{
+    background-color: black !important;
+}
+
+.css-13cymwt-control:hover{
+    background-color: black !important;
+    color: red !important;
+    border-color: red !important;
+
+}
+
+
+.newAlarmInput{
+    background-color: black;
+    color: red;
+    border-color: red;
+    /* border-top-right-radius:15%; */
+
+}
+
+.saveBtn{
+    margin-left:5px;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    /* /* -webkit-filter:hue-rotate(0deg); */
+    filter: invert(15%) sepia(89%) saturate(6781%) hue-rotate(0deg) brightness(93%) contrast(118%);
+    color:red;
+ }
+
+ .tzBlock{
+    text-align: -webkit-center;
+    /* text-align: center; */
+ }
+
+ .react-switch-handle{
+    background: black !important;
+ }
+
+ .switchComp{
+    padding-left: 15px;
+    padding-right: 15px;
+ }
+
+
+ 
+ .newAlarmInput:focus {
+    /* -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; */
+    outline: none;
+    /* text-align: center;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 6px 10px; */
+    background: black;
+    /* cursor: pointer;
+    font-family: 'Heebo', sans-serif; */
+}
+
+.MenuItem{
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+
+}
+/* .MenuItem.Mui-selected {
+    background: red ! important;
+    color: black !important;
+    border-radius: 50% !important;
+}
+.MenuItem.Mui:hover {
+
+    border-radius: 50% !important;
+} */
+
+  /* .MenuItem.MuiButtonBase-root-MuiToggleButton-root.Mui-selected{
+    color:chartreuse;
+  } */
+
+
+  .tz{
+    margin-top: 10px;;
+    font-size: 12px;
+  }
+
+
+  .MuiOutlinedInput-notchedOutline {
+    border-width: 1px !important;
+    border-color: red !important;
+    color:red;
+    background-color: "black" !important;
+    /* height: 30px; */
+    
+  }
+  
+  .Mui-focused .MuiOutlinedInput-notchedOutline {
+    /* border-color: red !important; */
+    background-color: "black" !important;
+  }
+

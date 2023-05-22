@@ -7,10 +7,13 @@ import UsePutAlarmService from '../service/putAlarms'
 import Sound from "../alarm-sound.mp3";
 import trash from '../delete.png';
 import UseDeleteAlarmService from '../service/deleteAlarm';
+import '../style/clock.css';
 
 interface alarmProps {
   (id: number): void
 }
+const alarm = new Audio(Sound);
+
 
 const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chromeCheck:Boolean}> = ({stat, removeAlarm, chromeCheck}) => {
   const [alarmTime, setAlarmTime] = useState(stat.time)
@@ -18,10 +21,11 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
   const [hourDigital, setHourDigital] = useState("");
   const [minutesDigital, setMinutesDigital] = useState("");
   const [hasAlarm, setHasAlarm] = useState(false);
+  const [alarmStopped, setAlarmStopped] = useState(false);
+
   const alarmRef = useRef(false);
 
   // const alarmCtx= useGlobalContext();
-   const alarm = new Audio(Sound);
   //  alarm.muted = true;
  // const alarm = new Audio("https://audio.bfmtv.com/bfmbusiness_128.mp3?aw_0_1st.playerId=AudioPlayer_Web_Next");
 
@@ -48,15 +52,11 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
       };
     }, []);
 
-    // if (alarmTime === `${hourDigital}:${minutesDigital}` && stat.active) {
-    //   console.log("test")
-    //   alarm.play();
-    //   alarm.loop = true;
-    // }
+
     //console.log("chromeCheck", chromeCheck)
-    if (alarmTime === `${hourDigital}:${minutesDigital}` && checked) {
-      //console.log("test")
+    if (alarmTime === `${hourDigital}:${minutesDigital}` && checked && !hasAlarm && !alarmStopped) {
       alarm.play();
+      setHasAlarm(true);
       alarmRef.current = true;
       // const promise = alarm.play();
       // if(promise !== undefined){
@@ -75,16 +75,16 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
       //         alarm.loop = true;
       //     });
       // }
-
-
-
       alarm.loop = true;
     }
 
     const pauseAlarm = () => {
       alarm.pause();
-      alarmRef.current = false;
-      console.log("alll")
+      alarm.currentTime=0;
+      setHasAlarm(false)
+      setAlarmStopped(true)
+      // alarmRef.current = false;
+      // console.log("ref", alarmRef)
       //setAlarmTime("");
     };
 
@@ -94,19 +94,59 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
     }
 
     const deleteAlarm=()=>{
+      alarm.pause();
+      alarm.currentTime=0;
       UseDeleteAlarmService(stat.id)
       removeAlarm(stat.id)
     }
 
-    return <div> {stat.time} 
-          <ReactSwitch
+    return <div className="clock"> {stat.time} 
+      <ReactSwitch className="switchComp"
         checked={checked}
         onChange={handleChange}
-        onColor="#eb4034"
-        onHandleColor	="#eb4034"
+        onColor="#ff0000"
+        offColor="#ff0000"
+        height={20}
+        handleDiameter={16}
+        uncheckedIcon={
+          <div
+            style={{
+              position:"absolute",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              fontSize: 15,
+              color: "black",
+              paddingRight: 2
+            }}
+          >
+            Off
+          </div>
+        }
+        checkedIcon={
+          <div
+            style={{
+              position:"absolute",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              fontSize: 15,
+              color: "black",
+              paddingLeft: 10
+            }}
+          >
+            On
+          </div>
+        }
+        // onHandleColor	="#ff0000"
       />
       <img src={trash} alt="poubelle" onClick={deleteAlarm} style={{height:"20px"}} />
-      { alarmRef.current?(
+      {/* { alarmRef.current?( */}
+      { hasAlarm?(
+
         <img src={trash} alt="poubelle" onClick={pauseAlarm} style={{height:"20px"}} />
       ):(
         <span></span>

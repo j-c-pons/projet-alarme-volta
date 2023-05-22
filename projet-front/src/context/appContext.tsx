@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
+import {Alarm} from "../type/Alarm";
 const Sound = "../../alarm-clock-short-6402.mp3";
 const alarm = new Audio(Sound);
 const months = [
@@ -20,7 +20,10 @@ const months = [
 interface Props{
   children: React.ReactNode;
 }
+
 export type ctxInterface = {
+  data:Alarm[]
+  setData:React.Dispatch<React.SetStateAction<Alarm[]>>
   hourDigital:string
   minutesDigital:string
   amPm:string
@@ -33,15 +36,12 @@ export type ctxInterface = {
   hasAlarm:boolean
   setHasAlarm:React.Dispatch<React.SetStateAction<boolean>>
 }
-// export type TodoContextType = {
-//   todos: ITodo[];
-//   saveTodo: (todo: ITodo) => void;
-//   updateTodo: (id: number) => void;
-// };
+
 
 export const AlarmContext = createContext<ctxInterface | null>(null);
 
 const ContextAlarmProvider = ({ children }:Props) => {
+  const [data, setData] = useState<Alarm[]>([]);
   const [hourDigital, setHourDigital] = useState("");
   const [minutesDigital, setMinutesDigital] = useState("");
   const [amPm, setAmPm] = useState("");
@@ -96,6 +96,8 @@ const ContextAlarmProvider = ({ children }:Props) => {
   return (
     <AlarmContext.Provider
       value={{
+        data,
+        setData,
         hourDigital,
         minutesDigital,
         amPm,

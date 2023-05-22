@@ -19,3 +19,7 @@ lancer l'api:
  pip install "fastapi[all]"
  pip instal uvicorn
  pip install sqlite3
+
+
+
+ améliorations:rappel, jours de la semaine, pop up quand elle se déclanche

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import './App.css';
+import './style/App.css';
 import Clock from './components/clock';
 import Alarm from './todeletecomp/alarm';
 import newAlarm from './todeletecomp/alarm';
 import ContextAlarmProvider from './context/appContext';
 import AddAlarm from './components/addAlarm';
 import CurrentAlarms from './components/currentAlarms'
-import Essai from './components/alarmItm';
 import TimeZone from './components/timezoneSelect';
-
-
+import './style/clock.css';
+import SelectTimezone from './components/timezones'
+import AddItemModal from './components/addModal'
 // interface ButtonProps {
 //   // sum: (a: number, b: number) => number;
 //   // logMessage: (message: string) => void;
@@ -34,11 +34,14 @@ const App: React.FC = () => {
   
 
   return (
-    <div>
+    <div className='text App'>
       <ContextAlarmProvider>
-        <TimeZone updateTZ={updateTZ} />
       <Clock format="hh:mm:ss" selectedTimezone={timezone} />
-      <h2>Alarms</h2>
+      {/* <TimeZone updateTZ={updateTZ} /> */}
+      <SelectTimezone updateTZ={updateTZ} />
+      {/* <h2>Alarms</h2> */}
+      <AddItemModal />
+
       {/* {alarms.map((alarm) => (
         <div key={alarm.id}>
           {alarm.time} - {alarm.active ? 'Active' : 'Inactive'}
