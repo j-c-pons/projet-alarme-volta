@@ -22,8 +22,16 @@ interface Props{
 }
 
 export type ctxInterface = {
+  days:string[]
+  setDays:React.Dispatch<React.SetStateAction<string[]>>
   data:Alarm[]
   setData:React.Dispatch<React.SetStateAction<Alarm[]>>
+  hasAlarm:boolean
+  setHasAlarm:React.Dispatch<React.SetStateAction<boolean>>
+  time:Date
+  setTime:React.Dispatch<React.SetStateAction<Date>>
+
+  // 
   hourDigital:string
   minutesDigital:string
   amPm:string
@@ -33,15 +41,19 @@ export type ctxInterface = {
   alarmTime:string
   setAlarmTime: React.Dispatch<React.SetStateAction<string>>
   pauseAlarm: any
-  hasAlarm:boolean
-  setHasAlarm:React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
 
-export const AlarmContext = createContext<ctxInterface | null>(null);
+export const AlarmContext = createContext<ctxInterface>({} as ctxInterface);
 
 const ContextAlarmProvider = ({ children }:Props) => {
+  const [days, setDays] = useState<string[]>(['L/D']);
   const [data, setData] = useState<Alarm[]>([]);
+  const [hasAlarm, setHasAlarm] = useState(false);
+  const [time, setTime] = useState(new Date());
+
+  // 
   const [hourDigital, setHourDigital] = useState("");
   const [minutesDigital, setMinutesDigital] = useState("");
   const [amPm, setAmPm] = useState("");
@@ -49,36 +61,43 @@ const ContextAlarmProvider = ({ children }:Props) => {
   const [monthNow, setMonthNow] = useState("");
   const [yearNow, setYearNow] = useState("");
   const [alarmTime, setAlarmTime] = useState("");
-  const [hasAlarm, setHasAlarm] = useState(false);
 
   useEffect(() => {
     setInterval(() => {
-      let date = new Date();
 
-      let HH:string|number = date.getHours(),
-        MM:string|number = date.getMinutes(),
-        day = date.getDate(),
-        month = date.getMonth(),
-        year = date.getFullYear(),
-        ampm;
+      const timer = setInterval(() => {
+        setTime(new Date());
+      }, 1000);
+  
+      return () => {
+        clearInterval(timer);
+      };
+      // let date = new Date();
 
-      if (HH >= 12) {
-        HH = HH - 12;
-        ampm = "PM";
-      } else {
-        ampm = "AM";
-      }
+      // let HH:string|number = date.getHours(),
+      //   MM:string|number = date.getMinutes(),
+      //   day = date.getDate(),
+      //   month = date.getMonth(),
+      //   year = date.getFullYear(),
+      //   ampm;
 
-      if (HH === 0) HH = 12;
-      if (HH < 10) HH = `0${HH}`;
-      if (MM < 10) MM = `0${MM}`;
+      // if (HH >= 12) {
+      //   HH = HH - 12;
+      //   ampm = "PM";
+      // } else {
+      //   ampm = "AM";
+      // }
 
-      setHourDigital(HH.toString());
-      setMinutesDigital(MM.toString());
-      setAmPm(ampm);
-      setDayNow(day.toString());
-      setMonthNow(months[month]);
-      setYearNow(year.toString());
+      // if (HH === 0) HH = 12;
+      // if (HH < 10) HH = `0${HH}`;
+      // if (MM < 10) MM = `0${MM}`;
+
+      // setHourDigital(HH.toString());
+      // setMinutesDigital(MM.toString());
+      // setAmPm(ampm);
+      // setDayNow(day.toString());
+      // setMonthNow(months[month]);
+      // setYearNow(year.toString());
     }, 1000);
   }, []);
 
@@ -96,8 +115,13 @@ const ContextAlarmProvider = ({ children }:Props) => {
   return (
     <AlarmContext.Provider
       value={{
+        days,
+        setDays,
         data,
         setData,
+        time,
+        setTime,
+        // 
         hourDigital,
         minutesDigital,
         amPm,

@@ -1,20 +1,79 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {selectSx, menuItemSx, paperSx} from '../style/form'
-interface tzProps {
-  updateTZ:(newTz: string) => void
-}
 interface allTZ {
-  [key: string]: string;
+    [key: string]: string;
 }
 
-const SelectTimezone: React.FunctionComponent<tzProps> = ({updateTZ}) => {
+const selectSx={
+        height:30,
+        width:150, 
+        color:"red", 
+        backgroundColor:"black", 
+        textAlign:"center",  
+        overflow:"hidden",
+        // height:40,
+        "& .MuiSelect-icon": {
+          color: 'red',
+        },
+        "& .MuiList": {
+          paddingTop:0, 
+          paddingBottom: 0,  
+          borderColor:"red"
+        },
+        "& .MuiPaper": {
+          paddingTop:0, 
+          paddingBottom: 0,  
+          backgroundColor:"black",
+          },
+          '& > div': {
+            paddingTop:1,
+            paddingBottom:1,
+            fontSize:11,
+            border: 1.5,
+          },
+        
+}
 
-  const [timezone, setTimezone] = React.useState("Europe/Brussels");
+const menuItemSx={
+    width:350, 
+    color:"red", 
+    backgroundColor:"black", 
+    fontSize:9,
+    textAlign:"center",  
+    lineHeight:1,
+    "&:hover": {
+      backgroundColor: '#ff000060',
+      overflow:"hidden",
+    },
+    "& .Mui-selected": {
+      backgroundColor: 'red'
+    },
+  }
+
+const paperSx={        
+    paddingTop:0, 
+    paddingBottom: 0,  
+    // overflowY:"hidden !important",
+    backgroundColor:"black",
+    scrollbarWidth:"none",
+    borderColor:"red !important"
+  }
+
+  const modalSx = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    borderColor:'red',
+    boxShadow: 24,
+    p: 4,
+    background:"black",
+    color:"red"
+  }
+  
+
+
   const allTimezones:allTZ = {
     "Pacific/Midway": "Midway Island, Samoa",
     "Pacific/Honolulu": "Hawaii",
@@ -97,37 +156,4 @@ const SelectTimezone: React.FunctionComponent<tzProps> = ({updateTZ}) => {
     "Pacific/Tongatapu": "Nuku'alofa"
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    updateTZ(event.target.value as string)
-    setTimezone(event.target.value as string);
-  };
-
-  return (
-    <Box height={50} marginTop={1}>
-        {/* <InputLabel id="demo-simple-select-label">Timezones</InputLabel> */}
-        <Select
-          // labelId="demo-simple-select-label"
-          // id="demo-simple-select"
-          value={timezone}
-          // label="Timezone"
-          onChange={handleChange}
-          MenuProps={{PaperProps:{sx:paperSx}}}
-          sx={selectSx}>
-
-          {Object.keys(allTimezones).map((key, idx) => (
-            <MenuItem sx={menuItemSx} key={idx} value={key}>
-                {allTimezones[key]}
-            </MenuItem>
-          ))}
-        </Select>
-    </Box>
-  );
-}
-
-export default SelectTimezone;
-
-
-
-
-
-
+export {selectSx, menuItemSx,paperSx, modalSx, allTimezones}

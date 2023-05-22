@@ -3,7 +3,14 @@ import sqlite3
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel
+import json
 
+
+# class Item(BaseModel):
+#     time: str
+#     sonnerie:str
+#     jours: [str]
 
 app = FastAPI()
 db_path = "alarms.db"
@@ -37,6 +44,8 @@ def create_alarm_table():
     c.execute('''CREATE TABLE IF NOT EXISTS alarms
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  time TEXT NOT NULL,
+                 jours TEXT NOT NULL,
+                 sonnerie TEXT NOT NULL,
                  active BOOLEAN)''')
     conn.commit()
     conn.close()
@@ -53,14 +62,16 @@ def get_alarms():
     c.execute("SELECT * FROM alarms")
     alarms = c.fetchall()
     conn.close()
+    alarms[0]["jours"] = json.loads(alarms[0]["jours"].decode('utf8'))
     return {"alarms": alarms}
 
 @app.post("/create_alarm")
-async def create_alarm(request: Request):
-    da = await request.form()
+async def create_alarm(request:Request):
+    da = await request.json()
+    listToJson = json.dumps(da["jours"]).encode('utf8')
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("INSERT INTO alarms (time, active) VALUES (?, ?)", (da["time"], True))
+    c.execute("INSERT INTO alarms (time, jours, sonnerie, active) VALUES (?, ?, ?, ?)", (da["time"], listToJson, da["sonnerie"], True))
     conn.commit()
     alarm_id = c.lastrowid
     conn.close()

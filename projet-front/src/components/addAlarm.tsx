@@ -7,6 +7,11 @@ import {postAlarm} from "../type/Alarm";
 import useGetAlarmsService from '../service/getAlarms';
 import Button from '@mui/material/Button';
 import { useGlobalContext } from "../context/appContext";
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {selectSx, menuItemSx, paperSx} from '../style/form'
 
 interface modalProps {
     handleClose:(event: React.MouseEvent<HTMLElement>) => void
@@ -15,35 +20,57 @@ interface modalProps {
 const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const alarmCtx= useGlobalContext();
     const {service, postAlarm} = usePostAlarmService();
-    const {result, data, setData, chromeCheck} = useGetAlarmsService();
+    const [sonnerie, setSonnerie] = useState<string>("Sonnerie classique");
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const [timeNull, setTimeNull] = useState<boolean>(true);
     const sentRef = useRef<Boolean>(false);
-      const addAlarm = async (event: React.MouseEvent<HTMLButtonElement>) => {
+
+    const addAlarm = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if(inputRef.current!=null){
-          const res = await postAlarm(inputRef.current.value);
-          let newData = {id: res.alarm_id, time:inputRef.current.value, active:true} ;
-          setData((prevData)=>[...prevData, newData]);
-          inputRef.current.value="";
-          sentRef.current=true;
-          console.log("ok")
+            let timeValue = inputRef.current.value
+        //   console.log("test", inputRef.current.value)
+            sentRef.current=true;
+            const res = await postAlarm(inputRef.current.value, sonnerie, alarmCtx.days);
+            let newData = {id: res.alarm_id, time:timeValue, active:true, sonnerie:sonnerie, jours:alarmCtx.days} ;
+            alarmCtx.setData((prevData)=>[...prevData, newData]);
+        //   inputRef.current.value="";
         }
-        //TODO else
-        //todo move to another comp
-    };
+    }
+
+    const updateTimeNull = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        if(inputRef.current!=null)
+            setTimeNull(false)
+    }
+
+    const updateSonnerie = (event:SelectChangeEvent)=>{
+        setSonnerie(event.target.value as string)
+    }
 
     return <div>
         {!sentRef.current &&
-        <div>
-        <input className="newAlarmInput" type="time"  ref={inputRef} />
-        <ToggleButtons />
-        <button className="newAlarmInput saveBtn" onClick={addAlarm}>Enregistrer</button>
+            <div className="addAlarm">
+            <input className="newAlarmInput" type="time" onChange={updateTimeNull} ref={inputRef} />
+            <ToggleButtons />
+            <Box>
+                <Select
+                value={sonnerie}
+                MenuProps={{PaperProps:{sx:paperSx}}}
+                onChange={updateSonnerie}
+                sx={selectSx}>
+                    <MenuItem sx={menuItemSx} value={"Sonnerie classique"}>Sonnerie classique</MenuItem>
+                    <MenuItem sx={menuItemSx} value={"Sonnerie FM"}>Sonnerie FM</MenuItem>
+                </Select>
+            </Box>
+            <button className="newAlarmInput saveBtn" disabled={timeNull} onClick={addAlarm}>Enregistrer</button>
         </div>
         } 
-        {service.status === 'loading' && <div>En cours d'envoi...</div>}
-        {service.status === 'loaded' && <div>Alarme crée</div>}
-        {service.status === 'error' && <div>Erreur</div>}
-        {sentRef.current && <Button sx={{color:"red"}} onClick={handleClose}>Fermer</Button>}
+        {service.status === 'loading' && <div  className="postSend">En cours d'envoi...</div>}
+        {service.status === 'loaded' && <div  className="postSend">Alarme crée</div>}
+        {service.status === 'error' && <div  className="postSend">Erreur</div>}
+        {sentRef.current && <div className="postSend"> <Button sx={{color:"red", textAlign:"center"}} onClick={handleClose}>Fermer</Button></div>
+}
+
     </div>
 }
 

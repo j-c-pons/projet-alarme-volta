@@ -1,7 +1,5 @@
 import React,  { useState, useEffect,  Dispatch, SetStateAction } from "react";
-// import "./DigitalClock.css";
 import '../style/clock.css';
-
 import {useGlobalContext} from '../context/appContext';
 
 interface ClockProps {
@@ -30,20 +28,20 @@ interface ClockProps {
   // const date = time.toLocaleTimeString([], {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: selectedTimezone  });
 
   // Créer une instance de l'objet Date
-var date = new Date();
+let date = new Date();
 
 // Tableaux pour les jours de la semaine et les mois
-var joursSemaine = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-var mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+let joursSemaine = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+let mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
 // Obtenir les composants de la date
-var jourSemaine = joursSemaine[date.getDay()];
-var jour = date.getDate();
-var moisActuel = mois[date.getMonth()];
-var annee = date.getFullYear();
+let jourSemaine = joursSemaine[date.getDay()];
+let jour = date.getDate();
+let moisActuel = mois[date.getMonth()];
+let annee = date.getFullYear();
 
 // Construire la chaîne de caractères pour afficher la date
-var dateFormatee = jourSemaine + " " + jour + " " + moisActuel + " " + annee;
+let dateFormatee = jourSemaine + " " + jour + " " + moisActuel + " " + annee;
 
   return (
     <div>

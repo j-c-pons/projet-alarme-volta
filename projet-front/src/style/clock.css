@@ -9,12 +9,12 @@
 }
 
 .text{
-    color: red;
+    margin-top:5px;
 }
 
 select{
     color:red;
-    font-size: 30px;
+    font-size: 12px;
     background-color: black;
     border-color: red;
 }
@@ -100,7 +100,8 @@ select{
 }
 
 .saveBtn{
-    margin-left:5px;
+    margin-top:15px;
+    cursor: pointer;
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
@@ -179,3 +180,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     background-color: "black" !important;
   }
 
+
+
+  .addAlarm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .postSend{
+    text-align:center;
+  }

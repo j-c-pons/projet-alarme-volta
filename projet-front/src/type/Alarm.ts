@@ -2,6 +2,8 @@ export interface Alarm {
     id: number;
     time: string;
     active:boolean | string;
+    sonnerie:string;
+    jours:string[];
 }
 export interface Alarms {
   results: Alarm[];

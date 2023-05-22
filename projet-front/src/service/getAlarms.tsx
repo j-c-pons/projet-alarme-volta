@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import {Alarm, Service, ServiceLoaded, Alarms} from "../type/Alarm";
 // import useModalShow from "./modal";
 // import { confirmable } from 'react-confirm';
+import { useGlobalContext } from "../context/appContext";
+
 
 
 const useGetAlarmsService = () => {
-
+  const alarmCtx= useGlobalContext();
   const [result, setResult] = useState<Service<ServiceLoaded>>({
     status: 'loading',
   });
-  const [data, setData] = useState<Alarm[]>([]);
+  // const [data, setData] = useState<Alarm[]>([]);
   const [chromeCheck, setChromeCheck] = useState(false);
 
   console.log("test")
@@ -29,7 +31,7 @@ const useGetAlarmsService = () => {
 
           //if (window.confirm("Do you really want to leave?")) {
           setResult({ status: 'loaded' });
-          setData(response.alarms);
+          alarmCtx.setData(response.alarms);
           //}
         }
       })
@@ -46,7 +48,7 @@ const useGetAlarmsService = () => {
   }, []);
 
   
-  return {data, result, setData, chromeCheck, setChromeCheck};
+  return { result, chromeCheck, setChromeCheck};
 };
 
 

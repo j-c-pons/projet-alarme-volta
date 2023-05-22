@@ -1,50 +1,54 @@
 import { useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { useGlobalContext } from "../context/appContext";
 
 const ToggleButtons:React.FunctionComponent = ({}) =>{
-  const [days, setDays] = useState<string[]>([]);
+    const alarmCtx= useGlobalContext();
+
+//   const [days, setDays] = useState<string[]>(['L/D']);
   const DAYS = [
     {
-      key: "lundi",
+      key: "Lundi",
       label: "L"
     },
     {
-      key: "mardi",
+      key: "Mardi",
       label: "Ma"
     },
     {
-      key: "mercredi",
+      key: "Mercredi",
       label: "Me"
     },
     {
-      key: "jeudi",
+      key: "Jeudi",
       label: "J"
     },
     {
-      key: "vendredi",
+      key: "Vendredi",
       label: "V"
     },
     {
-      key: "samedi",
+      key: "Samedi",
       label: "S"
     },
     {
-      key: "dimanche",
+      key: "Dimanche",
       label: "D"
     },
     {
-      key:"lundi-dimanche",
+      key:"Lundi-Dimanche",
       label:"L/D"
     },
     {
-      key:"lundi-vendredi",
+      key:"Lundi-Vendredi",
       label:"L/V"
     }
   ];
 
   const buttonSX = {
     borderRadius:50,
-
+    paddingTop:1,
+    paddingBottom:1,
     color:'red',
     "& .MuiToggleButton-root":{
         color: 'red',
@@ -63,22 +67,30 @@ const ToggleButtons:React.FunctionComponent = ({}) =>{
         color: 'black',
         background:"red",
         borderRadius:50
+    },
+    "& .MuiToggleButton-root.Mui-selected:hover":{
+        background:"#ff000090 !important",
+
     }
   };
 
 
   const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string,) => {
-    if(!days.includes(newDay)){
-        setDays((curr)=> [...curr, newDay]);
+    if(newDay==="L/D"|| newDay==="L/V"){
+        alarmCtx.setDays([newDay]);
+    } else if(alarmCtx.days.includes("L/D") || alarmCtx.days.includes("L/V")){
+        alarmCtx.setDays((curr)=> [...curr.filter(d=> d!="L/D").filter(d=>d!="L/V"), newDay]);
+    } else if(!alarmCtx.days.includes(newDay)){
+        alarmCtx.setDays((curr)=> [...curr, newDay]);
     } else {
-        setDays((curr)=> curr.filter(d=> d!=newDay));
+        alarmCtx.setDays((curr)=> curr.filter(d=> d!=newDay));
     }
   };
 
   return (
         <ToggleButtonGroup
         sx={buttonSX}
-        value={days}
+        value={alarmCtx.days}
         exclusive
         onChange={handleDays}
         aria-label="text alignment"

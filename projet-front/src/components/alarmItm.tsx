@@ -13,17 +13,17 @@ interface alarmProps {
   (id: number): void
 }
 const alarm = new Audio(Sound);
-
+// http://icecast.radiofrance.fr/fip-midfi.mp3
 
 const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chromeCheck:Boolean}> = ({stat, removeAlarm, chromeCheck}) => {
-  const [alarmTime, setAlarmTime] = useState(stat.time)
-  const [checked, setChecked] = useState(true);
-  const [hourDigital, setHourDigital] = useState("");
-  const [minutesDigital, setMinutesDigital] = useState("");
-  const [hasAlarm, setHasAlarm] = useState(false);
-  const [alarmStopped, setAlarmStopped] = useState(false);
-
-  const alarmRef = useRef(false);
+    const alarmCtx= useGlobalContext();
+    const [alarmTime, setAlarmTime] = useState(stat.time)
+    const [checked, setChecked] = useState(true);
+    const [hourDigital, setHourDigital] = useState("");
+    const [minutesDigital, setMinutesDigital] = useState("");
+    // const [hasAlarm, setHasAlarm] = useState(false);
+    const [alarmStopped, setAlarmStopped] = useState(false);
+    const alarmRef = useRef(false);
 
   // const alarmCtx= useGlobalContext();
   //  alarm.muted = true;
@@ -31,57 +31,40 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
 
 
     useEffect(() => {
-      setInterval(() => {
-        let date = new Date();
+        setInterval(() => {
+          let date = new Date();
 
-        let HH:string|number = date.getHours()
-        let MM:string|number = date.getMinutes()
-  
-        if (HH < 10) HH = `0${HH}`;
-        if (MM < 10) MM = `0${MM}`;
-  
-        setHourDigital(HH.toString());
-        setMinutesDigital(MM.toString());
+          let HH:string|number = date.getHours()
+          let MM:string|number = date.getMinutes()
+    
+          if (HH < 10) HH = `0${HH}`;
+          if (MM < 10) MM = `0${MM}`;
+    
+          setHourDigital(HH.toString());
+          setMinutesDigital(MM.toString());
 
-      }, 1000);
+        }, 1000);
 
 
-      // if(stat.active==="false" || chromeCheck){
-      if(stat.active==="false"){
-        setChecked(false)
-      };
+        // if(stat.active==="false" || chromeCheck){
+        if(stat.active==="false"){
+          setChecked(false)
+        };
     }, []);
 
 
     //console.log("chromeCheck", chromeCheck)
-    if (alarmTime === `${hourDigital}:${minutesDigital}` && checked && !hasAlarm && !alarmStopped) {
+    if (alarmTime === `${hourDigital}:${minutesDigital}` && checked && !alarmCtx.hasAlarm && !alarmStopped) {
       alarm.play();
-      setHasAlarm(true);
+      alarmCtx.setHasAlarm(true);
       alarmRef.current = true;
-      // const promise = alarm.play();
-      // if(promise !== undefined){
-      //     promise.then(() => {
-      //         // Autoplay started
-      //         alarm.loop = true;
-      //         console.log("ok")
-      //     }).catch(error => {
-      //         // Autoplay was prevented.
-      //         // alarm.muted = true;
-      //         // alarm.muted = false;
-      //         console.log("error")
-      //         //alarm.muted = true;
-
-      //         alarm.play();
-      //         alarm.loop = true;
-      //     });
-      // }
       alarm.loop = true;
     }
 
     const pauseAlarm = () => {
       alarm.pause();
       alarm.currentTime=0;
-      setHasAlarm(false)
+      alarmCtx.setHasAlarm(false)
       setAlarmStopped(true)
       // alarmRef.current = false;
       // console.log("ref", alarmRef)
@@ -128,7 +111,6 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
           <div
             style={{
               position:"absolute",
-
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -141,16 +123,11 @@ const AlarmItm: React.FunctionComponent<{stat:Alarm, removeAlarm:alarmProps, chr
             On
           </div>
         }
-        // onHandleColor	="#ff0000"
       />
       <img src={trash} alt="poubelle" onClick={deleteAlarm} style={{height:"20px"}} />
-      {/* { alarmRef.current?( */}
-      { hasAlarm?(
-
+      { alarmCtx.hasAlarm &&
         <img src={trash} alt="poubelle" onClick={pauseAlarm} style={{height:"20px"}} />
-      ):(
-        <span></span>
-      )}
+      }
     </div>
 
 }

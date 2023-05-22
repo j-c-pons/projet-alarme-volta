@@ -46,8 +46,9 @@
 
 import React, { useContext, useState } from "react";
 // import "./AlarmOption.css";
-import { minutesNumber, hourNumber } from "../func";
 import useSelect from "../hook/useSelect";
+import { minutesNumber, hourNumber } from "../utils/functions";
+
 import AlarmContext, {ctxInterface, useGlobalContext} from '../context/appContext';
 
 interface AlarmProps {

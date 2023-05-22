@@ -7,10 +7,11 @@
 .App {
   text-align: center;
   background-color: black;
+  color: red;
   height: 100%;
   display: flex;
-    flex-direction: column;
-    justify-content: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .App-logo {
