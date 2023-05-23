@@ -15,6 +15,11 @@ const usePostAlarmService = () => {
     //  headers.append("Content-Type", "application/x-www-form-urlencoded");
      var urlencoded = new URLSearchParams();
      urlencoded.append("time", time);
+     if(sonnerie==="Sonnerie classique"){
+        sonnerie="https://bigsoundbank.com/UPLOAD/mp3/0173.mp3";
+     } else {
+        sonnerie="http://icecast.radiofrance.fr/fip-midfi.mp3"
+     }
      urlencoded.append("sonnerie", sonnerie);
     //  urlencoded.append("jours", JSON.parse(jours));
     let test= JSON.stringify({ time: time, sonnerie:sonnerie, jours:jours})

@@ -15,12 +15,12 @@ const useGetAlarmsService = () => {
   // const [data, setData] = useState<Alarm[]>([]);
   const [chromeCheck, setChromeCheck] = useState(false);
 
-  console.log("test")
+  // console.log("test")
   const urlBack = "http://127.0.0.1:8000/get_alarms";
   useEffect(() => {
     let ignore = false;
 
-    function test(){
+    function getAlarms(){
       fetch(urlBack)
       .then(response => response.json())
       .then(response => {
@@ -38,9 +38,7 @@ const useGetAlarmsService = () => {
       .catch(error => setResult({ status: 'error', error }));
     }
     
-
-
-    test();
+    getAlarms();
     return () => {
       ignore = true;
     };

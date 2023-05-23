@@ -192,3 +192,38 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .postSend{
     text-align:center;
   }
+
+
+  .alarm-icon {
+    /* position: absolute; */
+    font-size: 100px;
+    left: -25px;
+    top: -20px;
+    animation: alarm 2s infinite alternate;
+  }
+  
+
+
+  @keyframes alarm {
+    0%,
+    100% {
+      transform: scale3d(1, 1, 1);
+      text-shadow: 0 0 0 transparent;
+    }
+    10%,
+    20% {
+      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -6deg);
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 6deg);
+      text-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+    }
+    40%,
+    60%,
+    80% {
+      transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -6deg);
+    }
+  }

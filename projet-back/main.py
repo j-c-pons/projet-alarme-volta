@@ -62,7 +62,8 @@ def get_alarms():
     c.execute("SELECT * FROM alarms")
     alarms = c.fetchall()
     conn.close()
-    alarms[0]["jours"] = json.loads(alarms[0]["jours"].decode('utf8'))
+    if len(alarms):
+        alarms[0]["jours"] = json.loads(alarms[0]["jours"].decode('utf8'))
     return {"alarms": alarms}
 
 @app.post("/create_alarm")

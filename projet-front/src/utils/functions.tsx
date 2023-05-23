@@ -78,4 +78,4 @@ function filterDayOfAlarm(input:Alarm):Boolean {
 
 // var arrByID = arr.filter(filtrerParID);
 
-export { minutesNumber, hourNumber, filterDayOfAlarm }
+export { minutesNumber, hourNumber, DAYS, filterDayOfAlarm }

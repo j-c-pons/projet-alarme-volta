@@ -4,12 +4,10 @@ import usePostAlarmService from '../service/postAlarm';
 import '../style/clock.css';
 import ToggleButtons from "./toggleDays"
 import {postAlarm} from "../type/Alarm";
-import useGetAlarmsService from '../service/getAlarms';
 import Button from '@mui/material/Button';
 import { useGlobalContext } from "../context/appContext";
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {selectSx, menuItemSx, paperSx} from '../style/form'
 
@@ -29,12 +27,10 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
         event.preventDefault();
         if(inputRef.current!=null){
             let timeValue = inputRef.current.value
-        //   console.log("test", inputRef.current.value)
             sentRef.current=true;
             const res = await postAlarm(inputRef.current.value, sonnerie, alarmCtx.days);
             let newData = {id: res.alarm_id, time:timeValue, active:true, sonnerie:sonnerie, jours:alarmCtx.days} ;
             alarmCtx.setData((prevData)=>[...prevData, newData]);
-        //   inputRef.current.value="";
         }
     }
 

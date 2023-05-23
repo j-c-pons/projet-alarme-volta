@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import '../style/clock.css';
 import AddAlarm from './addAlarm';
-import {modalSx} from '../style/form'
+import {modalSx, btnSx2} from '../style/form'
 
 const AddItemModal: React.FunctionComponent = ({}) => {
   const [open, setOpen] = React.useState(false);
@@ -12,10 +12,11 @@ const AddItemModal: React.FunctionComponent = ({}) => {
   const handleClose = (event: React.MouseEvent<HTMLElement>) => setOpen(false);
 
   return (
-    <div className='text'>
-      <Button sx={{color:"black !important", backgroundColor:"red", borderRadius:1,    "&:hover":{
-        background:"#ff000095",
-    },}} onClick={handleOpen}>Nouvelle alarme</Button>
+    <div>
+      <Button sx={btnSx2} 
+      onClick={handleOpen}>
+        Nouvelle alarme
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
