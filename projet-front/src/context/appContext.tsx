@@ -34,13 +34,18 @@ export type ctxInterface = {
   setTime:React.Dispatch<React.SetStateAction<Date>>
   alarmID:number
   setAlarmID:React.Dispatch<React.SetStateAction<number>>
-  pauseAlarm:()=>void
+  startAlarm:(sonnerie:string)=>void
+  pauseAlarm:() => "Sonnerie classique" | "Sonnerie FM" |""
   selectedSound:string
   setselectedSound:React.Dispatch<React.SetStateAction<string>>
+  snoozeAlarm:()=>void
+  timezone:string
+  setTimezone:React.Dispatch<React.SetStateAction<string>>
+  snooze: boolean
+  setSnooze:React.Dispatch<React.SetStateAction<boolean>>
   // 
   hourDigital:string
   minutesDigital:string
-  amPm:string
   dayNow:string
   monthNow:string
   yearNow:string
@@ -59,10 +64,11 @@ const ContextAlarmProvider = ({ children }:Props) => {
   const [hourDigital, setHourDigital] = useState("");
   const [minutesDigital, setMinutesDigital] = useState("");
   const [alarmID, setAlarmID] = useState(-1);
+  const [timezone, setTimezone] = useState("Europe/Brussels");
+  const [snooze, setSnooze] = useState(false);
 
-  // TODO: mettre en pause, snooze, style modal alarm, gestion des jours, style timezone
+  // TODO:  snooze, style modal alarm, gestion des jours, style timezone
 
-  const [amPm, setAmPm] = useState("");
   const [dayNow, setDayNow] = useState("");
   const [monthNow, setMonthNow] = useState("");
   const [yearNow, setYearNow] = useState("");
@@ -70,131 +76,55 @@ const ContextAlarmProvider = ({ children }:Props) => {
   const [selectedSound, setselectedSound] = useState("");
 
 
-  useEffect(()=>{
+ 
 
-    let ignore = false;
-    if(!ignore){
+  const startAlarm = (sonnerie:string) => {
+    console.log("start2", hasAlarm) 
 
-
-
-
-    if(hasAlarm){
-      console.log("selected", selectedSound)
-      if(selectedSound==="Sonnerie classique" && ring1.paused){
+    if(!hasAlarm){
+      console.log("selected sonnerie", sonnerie)
+      if(sonnerie==="Sonnerie classique"){
         ring1.play();
         ring1.loop = true;
-      } else if (ring2.paused){
+        setHasAlarm(true)
+      } else if (sonnerie==="Sonnerie FM"){
         ring2.play();
-      }
-    } else {
-      if(selectedSound==="Sonnerie classique"){
-        ring1.pause();
-        ring1.currentTime=0;
+        setHasAlarm(true)
       } else {
-        ring2.pause();
-      } 
+        console.log("nope")
+      }
     }
-
   }
-    return () => {
-        ignore = true;
-    };
-
-  }, [hasAlarm]);
 
 
   const pauseAlarm = () => {
     setHasAlarm(false);
+    if(!ring1.paused){
+      ring1.pause();
+      ring1.currentTime=0;
+      ring1.loop = false;
+      return "Sonnerie classique";
+    } else if (!ring2.paused){
+      ring2.pause();
+      return "Sonnerie FM";
+    } else {
+      console.log("bad return")
+      return"";
+    }
   };
 
-  // useEffect(() => {
-  //       const timer2 = setInterval(() => {
-  //         setTime(new Date());
-  //       }, 1000)
 
-  //   const timer = setTimeout(() => {
-  //       console.log('alarm stat ', hasAlarm)
+  const snoozeAlarm = () => {
+    let sonnerie = pauseAlarm()
+    setHasAlarm(false); 
+    console.log("test11111", hasAlarm)
+    const timer = setTimeout(() => {
+      console.log("start", hasAlarm) 
+      startAlarm(sonnerie);
+    }, 9000);
 
-  //       if(!hasAlarm){
-
-  //         let date = new Date();
-  //         let HH:string|number = date.getHours()
-  //         let MM:string|number = date.getMinutes()
-  //         if (HH < 10) HH = `0${HH}`;
-  //         if (MM < 10) MM = `0${MM}`;
-  //         let hourDigital = HH.toString();
-  //         let minutesDigital = MM.toString();
-  //         console.log("current data ", data)
-  //         data.forEach((elt)=>{
-  //             if(elt.time===`${hourDigital}:${minutesDigital}` && elt.active){
-  //               // alarm.play();
-  //               // console.log("hasAlarm", hasAlarm)
-  //               console.log("ALARME DECLENCHEE")
-  //               setHasAlarm(true);
-  //               setAlarmID(elt.id)
-  //               // alarm.loop = true;
-  //             }
-  //           })  
-  //       }
-
- 
-
-
-  //   }, 1000);
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //           clearInterval(timer2);
-
-  //   };
-  // }, [hasAlarm, data, time]);
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-
-  //     setHasAlarm((currentAlarm)=>
-  //     {
-  //       console.log('alarm stat ', currentAlarm)
-  //       if(!currentAlarm){
-
-  //         let date = new Date();
-  //         // setTime(date)
-  //         let HH:string|number = date.getHours()
-  //         let MM:string|number = date.getMinutes()
-  //         if (HH < 10) HH = `0${HH}`;
-  //         if (MM < 10) MM = `0${MM}`;
-  //         let hourDigital = HH.toString();
-  //         let minutesDigital = MM.toString();
-
-  //         setData((currData)=>
-  //         {
-  //           console.log('current data', currData)
-  //           currData.forEach((elt)=>{
-  //             if(elt.time===`${hourDigital}:${minutesDigital}` && elt.active){
-  //               // alarm.play();
-  //               // console.log("hasAlarm", hasAlarm)
-  //               console.log("ALARME DECLENCHEE")
-  //               // setHasAlarm(prev=>!prev);
-  //               alarm.loop = true;
-  //               return true;
-  //             }
-  //           })  
-  //           return currData;
-  //         })
-  //       }
-  //       return currentAlarm;
-
-  //     })
- 
-
-
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
-
+    // }, 300000);
+  };
 
   return (
     <AlarmContext.Provider
@@ -207,13 +137,18 @@ const ContextAlarmProvider = ({ children }:Props) => {
         setTime,
         alarmID, 
         setAlarmID,
+        startAlarm,
         pauseAlarm,
         selectedSound,
         setselectedSound,
+        snoozeAlarm,
+        timezone, 
+        setTimezone,
+        snooze, 
+        setSnooze,
         // 
         hourDigital,
         minutesDigital,
-        amPm,
         dayNow,
         monthNow,
         yearNow,

@@ -4,7 +4,7 @@ import { useGlobalContext } from "../context/appContext";
 import {btnSx} from '../style/form'
 import {DAYS} from '../utils/functions'
 
-const ToggleButtons:React.FunctionComponent = () =>{
+const ToggleDays:React.FunctionComponent = () =>{
     const alarmCtx= useGlobalContext();
     const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string,) => {
         if(newDay==="L/D"|| newDay==="L/V"){
@@ -36,4 +36,4 @@ const ToggleButtons:React.FunctionComponent = () =>{
   );
 }
 
-export default ToggleButtons;
+export default ToggleDays;

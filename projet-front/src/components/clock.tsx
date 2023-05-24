@@ -1,14 +1,12 @@
 import React,  { useState, useEffect,  Dispatch, SetStateAction } from "react";
 import '../style/clock.css';
 import {useGlobalContext} from '../context/appContext';
-import HasAlarmModal from './hasAlarmModal'
 
 interface ClockProps {
   format: string;
-  selectedTimezone:string;
 }
 
- const Clock: React.FunctionComponent<ClockProps> = ({ format, selectedTimezone }) => {
+ const Clock: React.FunctionComponent<ClockProps> = ({ format }) => {
     const alarmCtx= useGlobalContext();
     const [time, setTime] = useState(new Date());
 
@@ -22,7 +20,7 @@ interface ClockProps {
       };
     }, []);
 
-    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: selectedTimezone  });
+    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: alarmCtx.timezone  });
     //toLocaleTimeString([], { timeZone: 'UTC' })
     // const date = time.toLocaleTimeString([], {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: selectedTimezone  });
 
@@ -44,14 +42,11 @@ interface ClockProps {
 
   return (
     <div>
-      {/* {alarmCtx.hasAlarm &&(
-        <HasAlarmModal /> 
-      )}  */}
       <div className="clock clock_center">{formattedTime}</div>
       <div className="clock__date">
         {dateFormatee}        
       </div>
-      <div className="tz">Timezone: {selectedTimezone}</div>
+      <div className="tz">Timezone: {alarmCtx.timezone}</div> 
     </div>
   );
 }

@@ -2,6 +2,8 @@
 /projet-volta/node_modules
 /projet-front/node_modules
 /projet-back/env
+/projet-back/__pycache__
+/projet-back/alarms.db
 
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

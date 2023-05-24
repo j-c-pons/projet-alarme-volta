@@ -1,10 +1,14 @@
+export type Sonnerie = "Sonnerie classique" | "Sonnerie FM" ;
+
+
 export interface Alarm {
     id: number;
     time: string;
     active:boolean | string;
-    sonnerie:string;
+    sonnerie:Sonnerie ;
     jours:string[];
 }
+
 export interface Alarms {
   results: Alarm[];
 }
@@ -12,11 +16,14 @@ export interface postAlarm {
     alarm_id: number;
 }
 
-interface ServiceInit {
+  interface ServiceInit {
     status: 'init';
   }
   interface ServiceLoading {
       status: 'loading';
+  }
+  interface ServiceChromeCheck {
+    status: 'chromeCheck';
   }
  export interface ServiceLoaded {
       status: 'loaded';
@@ -30,5 +37,6 @@ interface ServiceInit {
   export type Service<T> =
     | ServiceInit
     | ServiceLoading
+    |ServiceChromeCheck
     | ServiceLoaded
     | ServiceError;

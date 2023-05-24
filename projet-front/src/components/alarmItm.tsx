@@ -8,100 +8,53 @@ import UsePutAlarmService from '../service/putAlarms'
 import trash from '../delete.png';
 import UseDeleteAlarmService from '../service/deleteAlarm';
 import '../style/clock.css';
-import HasAlarmModal from "./hasAlarmModal";
+import HasAlarmModal from "./modals/hasAlarmModal";
 import  {checkStyle, uncheckStyle} from '../style/check'
-// const classicRing = "../../alarm-clock-short-6402.mp3"; 
+import {getTimeDiff} from '../utils/functions'
+import ToggleButtons from './toggleDays'
 
-interface alarmProps {
+interface alarmProps { 
   (id: number): void
 }
-// const alarm = new Audio(Sound);
-// http://icecast.radiofrance.fr/fip-midfi.mp3
 
 const AlarmItm: React.FunctionComponent<{item:Alarm, removeAlarm:alarmProps, chromeCheck:Boolean}> = ({item, removeAlarm, chromeCheck}) => {
     const alarmCtx= useGlobalContext();
-    const [alarmTime, setAlarmTime] = useState(item.time)
+    // const [alarmTime, setAlarmTime] = useState(item.time)
     const [checked, setChecked] = useState(true);
-    const [hourDigital, setHourDigital] = useState("");
-    const [minutesDigital, setMinutesDigital] = useState("");
-    const [time, setTime] = useState(new Date());
-    const [alarmStopped, setAlarmStopped] = useState(false);
-    const alarmRef = useRef(false);
-    const [displayAlarm, setDisplayAlarm] = useState(false);
-    // console.log("try")
+    // const [hourDigital, setHourDigital] = useState("");
+    // const [minutesDigital, setMinutesDigital] = useState("");
+    // const [time, setTime] = useState(new Date());
+    // const [alarmStopped, setAlarmStopped] = useState(false);
+    // const alarmRef = useRef(false);
+    // const [displayAlarm, setDisplayAlarm] = useState(false);
+
 
     useEffect(() => {
-        // if(stat.active==="false" || chromeCheck){
-        if(item.active==="false"){
-          setChecked(false)
-        };
+      //  switch off alarms on load
+      //console.log("item.active", item.active)
+      if(item.active===false || !chromeCheck){
+        setChecked(false)
+      };
     }, []);
 
     useEffect(() => {
-      // console.log("test")
-
-      const timer2 = setInterval(() => {
-        setTime(new Date());
-      }, 1000)
-
-      const timer = setTimeout(() => {
-          if(!alarmCtx.hasAlarm && item.active && !alarmStopped && checked){
-            // console.log("try2")
-            let date = new Date();
-            let HH:string|number = date.getHours()
-            let MM:string|number = date.getMinutes()
-            if (HH < 10) HH = `0${HH}`;
-            if (MM < 10) MM = `0${MM}`;
-            let hourDigital = HH.toString();
-            let minutesDigital = MM.toString();
-            if(item.time===`${hourDigital}:${minutesDigital}`){
-              alarmCtx.setHasAlarm(true);
-              alarmCtx.setselectedSound(item.sonnerie);
-              setDisplayAlarm(true);
-              clearInterval(timer2)
-            }
+      //  set alarm time out
+        let delay = getTimeDiff(item.time, alarmCtx.timezone)
+        const timerAlarm = setTimeout(() => {
+          if(checked){
+              alarmCtx.startAlarm(item.sonnerie)
           }
-  }, 1000);
+        }, delay)
 
-  return () => {
-    clearTimeout(timer);
-    clearInterval(timer2);
-  };
-}, [alarmCtx.hasAlarm, time]);
-
-    //console.log("chromeCheck", chromeCheck)
-    // if (alarmTime === `${hourDigital}:${minutesDigital}` && checked && !alarmCtx.hasAlarm && !alarmStopped) {
-    //   // alarm.play();
-    //   console.log("ALARME DECLENCHEE")
-    //   alarmCtx.setHasAlarm(true);
-    //   alarmRef.current = true;
-    //   alarm.loop = true;
-    // }
-
-    const stopAlarm = () => {
-      // alarmCtx.setHasAlarm(false)
-      setAlarmStopped(true)
-      // alarmRef.current = false;
-      // console.log("ref", alarmRef)
-      //setAlarmTime("");
-    };
-
-    const snooze = (event: React.MouseEvent<HTMLElement>) => {
-      console.log("ok")
-      stopAlarm()
-      const timer = setTimeout(() => {
-        console.log("exp")
-        if(!alarmCtx.hasAlarm && item.active && checked){
-          if(item.time===`${hourDigital}:${minutesDigital}`){
-            alarmCtx.setHasAlarm(true);
-            setAlarmStopped(false);
-            setDisplayAlarm(true);
-          }
-        }
-      }, 300000);
-    };
+        return () => {
+          clearTimeout(timerAlarm);
+        };
+  
+    }, [checked, alarmCtx.timezone]);
+ 
 
     const handleChange = (val:boolean) => {
+      console.log(val)
       setChecked(val)
       UsePutAlarmService(item.id, val);
     }
@@ -111,7 +64,8 @@ const AlarmItm: React.FunctionComponent<{item:Alarm, removeAlarm:alarmProps, chr
       removeAlarm(item.id)
     }
 
-    return <div className="clock"> {item.time} 
+    return <div className="clock"> 
+      {item.time} 
       <ReactSwitch className="switchComp"
         checked={checked}
         onChange={handleChange}
@@ -127,9 +81,6 @@ const AlarmItm: React.FunctionComponent<{item:Alarm, removeAlarm:alarmProps, chr
         }
       />
       <img src={trash} alt="poubelle" onClick={deleteAlarm} style={{height:"20px"}} />
-      {displayAlarm &&
-              <HasAlarmModal stopAlarm={stopAlarm} snooze={snooze} ring={item.sonnerie}/>
-      }
     </div>
 }
 

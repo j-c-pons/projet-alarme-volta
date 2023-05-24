@@ -2,8 +2,8 @@
 import React, { useState, useRef } from "react";
 import usePostAlarmService from '../service/postAlarm';
 import '../style/clock.css';
-import ToggleButtons from "./toggleDays"
-import {postAlarm} from "../type/Alarm";
+import ToggleDays from "./toggleDays"
+import {Sonnerie} from "../type/Alarm";
 import Button from '@mui/material/Button';
 import { useGlobalContext } from "../context/appContext";
 import Box from '@mui/material/Box';
@@ -14,11 +14,13 @@ import {selectSx, menuItemSx, paperSx} from '../style/form'
 interface modalProps {
     handleClose:(event: React.MouseEvent<HTMLElement>) => void
   }
+
+
   
 const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const alarmCtx= useGlobalContext();
     const {service, postAlarm} = usePostAlarmService();
-    const [sonnerie, setSonnerie] = useState<string>("Sonnerie classique");
+    const [sonnerie, setSonnerie] = useState<Sonnerie>("Sonnerie classique");
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [timeNull, setTimeNull] = useState<boolean>(true);
     const sentRef = useRef<Boolean>(false);
@@ -28,6 +30,7 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
         if(inputRef.current!=null){
             let timeValue = inputRef.current.value
             sentRef.current=true;
+            console.log("NEW", sonnerie)
             const res = await postAlarm(inputRef.current.value, sonnerie, alarmCtx.days);
             let newData = {id: res.alarm_id, time:timeValue, active:true, sonnerie:sonnerie, jours:alarmCtx.days} ;
             alarmCtx.setData((prevData)=>[...prevData, newData]);
@@ -40,14 +43,14 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     }
 
     const updateSonnerie = (event:SelectChangeEvent)=>{
-        setSonnerie(event.target.value as string)
+        setSonnerie(event.target.value as Sonnerie)
     }
 
     return <div>
         {!sentRef.current &&
             <div className="addAlarm">
             <input className="newAlarmInput" type="time" onChange={updateTimeNull} ref={inputRef} />
-            <ToggleButtons />
+            <ToggleDays />
             <Box>
                 <Select
                 value={sonnerie}
