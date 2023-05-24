@@ -1,6 +1,6 @@
-import React, { useContext, useState, useRef, useMemo, useEffect } from "react";
+import React, {useState} from "react";
 import Modal from '@mui/material/Modal';
-import {modalSx2, modalSx} from '../../style/form'
+import {modalSx, confirmBtnSx} from '../../style/form'
 import Box from '@mui/material/Box';
 import { FcAlarmClock } from "react-icons/fc";
 import {useGlobalContext} from '../../context/appContext';
@@ -16,22 +16,12 @@ interface loadAlarmProps {
 const LoadAlarmModal: React.FunctionComponent<loadAlarmProps> = ({openModal, callback}) => {
     const alarmCtx= useGlobalContext();
     const [open, setOpen] = useState(true);
-    // console.log("try")
-    // const [alarmAudio, setAlarmAudio]  = useState(new Audio(ring))
-
-    // useEffect(() => {
-    // }, []);
-
-    // const handleOpen = () => setOpen(true);
-
-    // const handleClose = (event: React.MouseEvent<HTMLElement>) => {
-    //     setOpen(false);
-    // };
 
     const handleYes = (event: React.MouseEvent<HTMLElement>) => {
       callback(true);
       setOpen(false);
     };
+
     const handleNo = (event: React.MouseEvent<HTMLElement>) => {
       callback(false);
       setOpen(false);
@@ -44,10 +34,10 @@ const LoadAlarmModal: React.FunctionComponent<loadAlarmProps> = ({openModal, cal
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalSx}>
-            <div>Voulez-vous activer les alarmes enregistrées ?</div>
-            <Button sx={{color:"red", textAlign:"center"}} onClick={handleYes}>Oui</Button>
-            <Button sx={{color:"red", textAlign:"center"}} onClick={handleNo}>Non</Button>
+        <Box className="flex" sx={modalSx}>
+            <div className="modalTxt">Voulez-vous activer les alarmes enregistrées ?</div>
+            <Button sx={confirmBtnSx} onClick={handleYes}>Oui</Button>
+            <Button sx={confirmBtnSx} onClick={handleNo}>Non</Button>
         </Box>
       </Modal>
     , document.body)

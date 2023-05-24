@@ -1,16 +1,40 @@
+/* CLOCK */
 .clock{
     color: red;
     font-family: "clock-font" ;
-    font-size:30px;
+    font-size:35px;
 }
 
 .clock_center{
-    font-size:150px;
+    font-size:200px;
 }
 
-.text{
-    margin-top:5px;
+.date{
+  font-size: 40px;
 }
+
+.tz{
+  margin-top: 10px;;
+  font-size: 20px;
+}
+
+/* CURRENT ALARMS */
+.alarmBox{
+    margin-top:13px;
+}
+
+/* ALARM ITEM */
+.alarmMenu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alarmTime{
+  margin-right: 10px;
+}
+
+
+
 
 select{
     color:red;
@@ -52,43 +76,6 @@ select{
     /* font-family: monospace; */
   }
 
-.css-13cymwt-control{
-    font-size: 10px;
-}
-
-.css-13cymwt-control{
-    background-color: black !important;
-    color: red !important;
-    border-color: red !important;
-
-}
-.css-t3ipsp-control{
-    border-color: red !important;
-
-}
-
-.css-t3ipsp-control:hover{
-    border-color: red !important;
-
-}
-.css-qbdosj-Input{
-    color:red !important;
-}
-
-.css-1dimb5e-singleValue{
-    color:red !important;
-}
-
-.css-1nmdiq5-menu{
-    background-color: black !important;
-}
-
-.css-13cymwt-control:hover{
-    background-color: black !important;
-    color: red !important;
-    border-color: red !important;
-
-}
 
 
 .newAlarmInput{
@@ -160,10 +147,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   } */
 
 
-  .tz{
-    margin-top: 10px;;
-    font-size: 12px;
-  }
 
 
   .MuiOutlinedInput-notchedOutline {
@@ -182,7 +165,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 
 
-  .addAlarm{
+  /* MODALS */
+  .modalTxt{
+    margin-bottom: 10px;
+  }
+
+  .flex{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -194,16 +182,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 
 
+  /* HAS ALARM MODAL */
   .alarm-icon {
     /* position: absolute; */
     font-size: 100px;
     left: -25px;
     top: -20px;
     animation: alarm 2s infinite alternate;
+    margin-bottom: 30px;
   }
   
-
-
   @keyframes alarm {
     0%,
     100% {

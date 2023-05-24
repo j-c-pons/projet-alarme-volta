@@ -15,8 +15,6 @@ interface modalProps {
     handleClose:(event: React.MouseEvent<HTMLElement>) => void
   }
 
-
-  
 const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const alarmCtx= useGlobalContext();
     const {service, postAlarm} = usePostAlarmService();
@@ -24,21 +22,34 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [timeNull, setTimeNull] = useState<boolean>(true);
     const sentRef = useRef<Boolean>(false);
+    const [days, setDays] = useState(["L/D"]);
+
+    const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string) => {
+        if(newDay==="L/D"|| newDay==="L/V"){
+            setDays([newDay]);
+        } else if(days.includes("L/D") || days.includes("L/V")){
+            setDays((curr)=> [...curr.filter(d=> d!="L/D").filter(d=>d!=="L/V"), newDay]);
+        } else if(!days.includes(newDay)){
+            setDays((curr)=> [...curr, newDay]);
+        } else {
+            setDays((curr)=> curr.filter(d=> d!==newDay));
+        }
+    };
 
     const addAlarm = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if(inputRef.current!=null){
+        if(inputRef.current){
             let timeValue = inputRef.current.value
             sentRef.current=true;
-            console.log("NEW", sonnerie)
-            const res = await postAlarm(inputRef.current.value, sonnerie, alarmCtx.days);
-            let newData = {id: res.alarm_id, time:timeValue, active:true, sonnerie:sonnerie, jours:alarmCtx.days} ;
+
+            const res = await postAlarm(inputRef.current.value, sonnerie, days);
+            let newData = {id: res.alarm_id, time:timeValue, active:true, sonnerie:sonnerie, jours:days} ;
             alarmCtx.setData((prevData)=>[...prevData, newData]);
         }
     }
 
     const updateTimeNull = (event:React.ChangeEvent<HTMLInputElement>)=>{
-        if(inputRef.current!=null)
+        if(inputRef.current)
             setTimeNull(false)
     }
 
@@ -48,9 +59,9 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
 
     return <div>
         {!sentRef.current &&
-            <div className="addAlarm">
+            <div className="flex">
             <input className="newAlarmInput" type="time" onChange={updateTimeNull} ref={inputRef} />
-            <ToggleDays />
+            <ToggleDays handleFn={handleDays} currValue={days}/>
             <Box>
                 <Select
                 value={sonnerie}

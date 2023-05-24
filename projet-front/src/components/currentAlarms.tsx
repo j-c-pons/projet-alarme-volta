@@ -3,60 +3,38 @@ import React, { useState, useEffect} from "react";
 import {useGlobalContext} from '../context/appContext';
 import useGetAlarmsService from '../service/getAlarms';
 import AlarmItm from './alarmItm';
-// import usePostAlarmService from '../service/postAlarm';
 import '../style/clock.css';
 import HasAlarmModal from "./modals/hasAlarmModal";
 import LoadAlarmModal from "./modals/loadAlarmModal";
 
+let ring1 = new Audio("https://bigsoundbank.com/UPLOAD/mp3/0173.mp3");
+let ring2 = new Audio("http://icecast.radiofrance.fr/fip-midfi.mp3");
+
 const CurrentAlarms: React.FunctionComponent = () => {
     const {result, setResult} = useGetAlarmsService();
-    // const {service, postAlarm} = usePostAlarmService();
     const alarmCtx= useGlobalContext();
     const [chromeCheck, setChromeCheck] = useState(true);
     const [displayAlarm, setDisplayAlarm] = useState(false);
+    const [snooze, setSnooze] = useState(false);
+    const [sonnerieToSnooze, setSonnerieToSnooze] = useState("");
+    const [snoozeTrigger, setSnoozeTrigger] = useState(false);
 
-    // useEffect(() => {
-    //   // new time out (5 min) in case an alarm is snoozed
-    //   let sonnerieToSnooze = alarmCtx.pauseAlarm();
-    //   // setHasAlarm(false); 
-    //   // console.log("test11111", alarmCtx.hasAlarm)
-    //   const timer = setTimeout(() => {
-    //     // console.log("start", alarmCtx.hasAlarm) 
-    //     alarmCtx.startAlarm(sonnerieToSnooze);
-    //   }, 9000);
-    //   // }, 300000); 
+    useEffect(() => {
+      if(snooze){
+        // new time out (5 min) in case an alarm is snoozed
+        const timer = setTimeout(() => {
+          startAlarm(sonnerieToSnooze);
+        }, 300000); 
 
-    //     return () => {
-    //       clearTimeout(timer);
-    //     };
-
-    // }, [alarmCtx.snooze]);
-
-    
-  //   useEffect(() => {
-  //     console.log("test22222222222222222", alarmCtx.hasAlarm)
-  //  },[alarmCtx.hasAlarm])
+        setSnooze(false)
+      }
+    }, [snoozeTrigger]);
 
     const removeAlarm = (id:number)=>{ 
       alarmCtx.setData((prevData) =>
         prevData.filter((data) => data.id !== id) 
       );
     }
-
-    const snoozeAlarm = (e:React.MouseEvent<HTMLElement>) => {
-      // alarmCtx.setSnooze((prev)=>{ return !prev})
-      // alarmCtx.snoozeAlarm(); 
-      alarmCtx.setHasAlarm(false);
-
-      let sonnerieToSnooze = alarmCtx.pauseAlarm();
-      // setHasAlarm(false); 
-      const timer = setTimeout(() => {
-        console.log("start22222222", alarmCtx.hasAlarm) 
-        alarmCtx.startAlarm(sonnerieToSnooze);
-      }, 9000);
-  
-      // }, 300000); 
-    };
 
     const updateResult=(res:boolean) => {
       if(res){
@@ -67,17 +45,48 @@ const CurrentAlarms: React.FunctionComponent = () => {
       }
     }
 
-    return <div className="text">
+    const startAlarm = (sonnerie:string) => {  
+      if(!displayAlarm){
+        if(sonnerie==="Sonnerie classique"){
+          ring1.play();
+          ring1.loop = true;
+        } else if (sonnerie==="Sonnerie FM"){
+          ring2.play();
+        }
+        setDisplayAlarm(true)
+      }
+    }
+  
+    const stopAlarm = () => {
+      setDisplayAlarm(false);
+      if(!ring1.paused){
+        ring1.pause();
+        ring1.currentTime=0;
+        ring1.loop = false;
+        return "Sonnerie classique";
+      } else{
+        ring2.pause();
+        return "Sonnerie FM";
+      } 
+    };
+
+    const snoozeAlarm = (e:React.MouseEvent<HTMLElement>) => {
+      setSonnerieToSnooze(stopAlarm());
+      setSnooze(true);
+      setSnoozeTrigger((prev)=>{ return !prev})
+    };
+
+    return <div className="alarmBox">
       {alarmCtx.data.length<1 &&(<h3>Aucune alarme sauvegardée</h3>)}
       {result.status === 'loading' && <div>Loading...</div>}
       {result.status === 'chromeCheck' && <LoadAlarmModal openModal={true} callback={updateResult}/>}
       {result.status === 'loaded' && alarmCtx.data &&
         alarmCtx.data.map(alarm=>
-          <AlarmItm key={alarm.id} item={alarm} removeAlarm={removeAlarm} chromeCheck={chromeCheck} />
+          <AlarmItm key={alarm.id} item={alarm} removeAlarm={removeAlarm} chromeCheck={chromeCheck} startAlarmFn={startAlarm}/>
         )
       }
       {result.status === 'error' && (<div>Error, something went wrong.</div>)}
-      {alarmCtx.hasAlarm && <HasAlarmModal snooze={snoozeAlarm}/>}
+      {displayAlarm && <HasAlarmModal snooze={snoozeAlarm} display={displayAlarm} stopAlarmFn={stopAlarm}/>}
     </div>
 }
 

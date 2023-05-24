@@ -3,7 +3,6 @@ import sqlite3
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel
 import json
 
 
@@ -63,7 +62,8 @@ def get_alarms():
     alarms = c.fetchall()
     conn.close()
     if len(alarms):
-        alarms[0]["jours"] = json.loads(alarms[0]["jours"].decode('utf8'))
+        for alarm in alarms:
+            alarm["jours"] = json.loads(alarm["jours"].decode('utf8'))
     return {"alarms": alarms}
 
 @app.post("/create_alarm")
@@ -80,17 +80,22 @@ async def create_alarm(request:Request):
 
 @app.put("/update_alarm")
 async def update_alarm(request:Request):
-    da = await request.form()
+    da = await request.json()
+    print("PUT1", da["jours"])
+    # print("PUT1", type(da["jours"]))
+
+    listToJson = json.dumps(da["jours"]).encode('utf8')
+    print("PUT2", listToJson)
+
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("UPDATE alarms SET active = ? WHERE id = ?", (da["active"], da["alarm_id"]))
+    c.execute("UPDATE alarms SET jours = ?, active = ? WHERE id = ?", (listToJson, da["active"], da["alarm_id"]))
     conn.commit()
     conn.close()
     return {"message": "Alarm updated"}
 
 @app.delete("/delete_alarm")
 def delete_alarm(alarm_id: int):
-    print(alarm_id)
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
     c.execute("DELETE FROM alarms WHERE id = ?", (alarm_id,))

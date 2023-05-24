@@ -1,9 +1,7 @@
 
 import { useState, useEffect } from "react";
-import {Alarm, Service, ServiceLoaded, Alarms} from "../type/Alarm";
+import {Service, ServiceLoaded} from "../type/Alarm";
 import { useGlobalContext } from "../context/appContext";
-
-
 
 const useGetAlarmsService = () => {
   const alarmCtx= useGlobalContext();
@@ -11,7 +9,7 @@ const useGetAlarmsService = () => {
     status: 'loading',
   });
 
-  const urlBack = "http://127.0.0.1:8000/get_alarms";
+  const urlBack = process.env.REACT_APP_URL_BACK+"get_alarms";
 
   useEffect(() => {
     let ignore = false;

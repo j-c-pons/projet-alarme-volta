@@ -4,19 +4,19 @@ const checkStyle:React.CSSProperties={
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    fontSize: 15,
+    fontSize: 18,
     color: "black",
     paddingLeft: 10
   }
 const uncheckStyle:React.CSSProperties={
     position:"absolute",
+    right:7,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    fontSize: 15,
+    fontSize: 18,
     color: "black",
-    paddingRight: 2
   }
 
 export {checkStyle, uncheckStyle}

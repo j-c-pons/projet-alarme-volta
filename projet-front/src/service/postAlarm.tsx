@@ -14,9 +14,9 @@ const usePostAlarmService = () => {
     headers.append('Content-Type', 'application/json; charset=utf-8');
  
     let json= JSON.stringify({ time: time, sonnerie:sonnerie, jours:jours})
-    console.log("json", json)
+
     return new Promise((resolve, reject) => {
-    const urlPost = "http://127.0.0.1:8000/create_alarm";
+    const urlPost = process.env.REACT_APP_URL_BACK+"create_alarm";
 
       fetch(urlPost, {
         method: 'POST',

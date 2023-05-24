@@ -1,17 +1,16 @@
-const UsePutAlarmService = (id: number, active:boolean) => {
+const UsePutAlarmService = (_id: number, _active?:boolean, _jours?:string[]) => {
 
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("alarm_id", id.toString());
-    urlencoded.append("active", active.toString());
-
+    
+    let json= JSON.stringify({ alarm_id: _id, jours:_jours,  active:_active})
+    console.log(json)
     return new Promise((resolve, reject) => {
-    const urlPost = "http://127.0.0.1:8000/update_alarm";
+    const urlPost = process.env.REACT_APP_URL_BACK+"update_alarm";
 
       fetch(urlPost, {
         method: 'PUT',
-        body: urlencoded,
+        body: json,
         headers
       })
         .then(response => response.json())

@@ -6,7 +6,7 @@ import '../../style/clock.css';
 import AddAlarm from '../addAlarm';
 import {modalSx, btnSx2} from '../../style/form'
 
-const AddItemModal: React.FunctionComponent = ({}) => {
+const AddItemModal: React.FunctionComponent = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = (event: React.MouseEvent<HTMLElement>) => setOpen(false);

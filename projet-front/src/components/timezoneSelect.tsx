@@ -4,7 +4,7 @@ import "../style/clock.css";
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import TimezoneSelect from 'react-timezone-select'
-
+//TODO: remove
 type ITimezoneOption = {
     value: string;
     label: string;

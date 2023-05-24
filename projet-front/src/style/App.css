@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "clock-font";   /*Can be any text*/
+  font-family: "clock-font"; 
   src: local("digital-7"),
-    url("../font/digital-7.ttf") format("truetype");
+    url("../assets/font/digital-7.ttf") format("truetype");
 }
 
 .App {

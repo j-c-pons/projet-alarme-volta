@@ -1,15 +1,14 @@
-interface allTZ {
-    [key: string]: string;
-}
-
 const selectSx={
-        height:30,
-        width:150, 
+        height:35,
+        width:255, 
+        marginBottom:4.2,
+        marginTop:1.6,
         color:"red", 
-        backgroundColor:"black", 
         textAlign:"center",  
         overflow:"hidden",
-        // height:40,
+        "&:hover": {
+          backgroundColor: '#ff000020',
+        },
         "& .MuiSelect-icon": {
           color: 'red',
         },
@@ -21,13 +20,11 @@ const selectSx={
         "& .MuiPaper": {
           paddingTop:0, 
           paddingBottom: 0,  
-          backgroundColor:"black",
           },
           '& > div': {
             paddingTop:1,
             paddingBottom:1,
-            fontSize:11,
-            border: 1.5,
+            fontSize:13,
           },
         
 }
@@ -100,7 +97,7 @@ const btnSx = {
         borderRadius:50,
         marginRight:0.5,
         marginLeft:0.5,
-        fontSize:10,
+        fontSize:12,
     },
     "& .MuiToggleButton-root:hover":{
         borderRadius:50,
@@ -116,37 +113,22 @@ const btnSx = {
 
     }
 }
-const btnSx2 = {color:"black !important", backgroundColor:"red", borderRadius:1, "&:hover":{background:"#ff000095"}}
 
+const btnSx2 = {
+  color:"black !important", 
+  backgroundColor:"red", 
+  fontSize:20,
+  // fontFamily: "clock-font",
+  // fontWeight:300,
+  width:300,
+  height:50,
+  // borderRadius:1, 
+  "&:hover":{background:"#ff000095"}
+}
 
-  const allTimezones:allTZ = {
-    "Pacific/Honolulu": "Hawaii",
-    "America/Chicago": "Central Time",
-    "America/Mexico_City": "Guadalajara, Mexico City, Monterrey",
-    "America/Belize": "Central America",
-    "America/Detroit": "Eastern Time",
-    "America/Bogota": "Bogota, Lima, Quito",
-    "America/Los_Angeles": "Pacific Time",
-    GMT: "UTC",
-    "Europe/London": "Edinburgh, London",
-    "Europe/Dublin": "Dublin",
-    "Africa/Casablanca": "Casablanca, Monrovia",
-    "Europe/Brussels": "Brussels, Copenhagen, Madrid, Paris",
-    "Europe/Amsterdam": "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
-    "Africa/Algiers": "West Central Africa",
-    "Africa/Cairo": "Cairo",
-    "Europe/Moscow": "Istanbul, Moscow, St. Petersburg, Volgograd",
-    "Asia/Kuwait": "Kuwait, Riyadh",
-    "Africa/Nairobi": "Nairobi",
-    "Asia/Bangkok": "Bangkok, Hanoi, Jakarta",
-    "Asia/Shanghai": "Beijing, Chongqing, Hong Kong SAR, Urumqi",
-    "Asia/Kuala_Lumpur": "Kuala Lumpur, Singapore",
-    "Asia/Seoul": "Seoul",
-    "Asia/Tokyo": "Osaka, Sapporo, Tokyo",
-    "Australia/Sydney": "Canberra, Melbourne, Sydney",
-    "Asia/Vladivostok": "Vladivostok",
-    "Pacific/Fiji": "Fiji Islands",
-    "Pacific/Auckland": "Auckland, Wellington",
-  };
-
-export {selectSx, menuItemSx,paperSx, modalSx, modalSx2, btnSx, btnSx2, allTimezones}
+const confirmBtnSx = {
+  color:"red",
+   textAlign:"center",
+   "&:hover": { backgroundColor: '#ff000060'}
+}
+export {selectSx, menuItemSx,paperSx, modalSx, modalSx2, btnSx, btnSx2, confirmBtnSx}

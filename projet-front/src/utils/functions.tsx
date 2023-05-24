@@ -1,11 +1,17 @@
-import {Alarm} from "../type/Alarm";
 
+import {allTZ} from '../type/Alarm'
+
+//24h in ms
 const OneDaytoMS = 86400000
-const minutesNumber = fixNumber(Array.from(Array(60).keys()))
-const hourNumber = fixNumber(Array.from(Array(13).keys()))
 
-const joursSemaine = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+// Tableaux pour les jours de la semaine et les mois
+let joursSemaine = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+let mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 const DAYS = [
+    {
+      key: "Dimanche",
+      label: "D"
+    },
     {
       key: "Lundi",
       label: "L"
@@ -31,10 +37,6 @@ const DAYS = [
       label: "S"
     },
     {
-      key: "Dimanche",
-      label: "D"
-    },
-    {
       key:"Lundi-Dimanche",
       label:"L/D"
     },
@@ -44,34 +46,21 @@ const DAYS = [
     }
   ];
 
-function fixNumber(value:number[]):string[] {
-    let res = value.map(hour => {
-        if (hour < 10) {
-            let test:string = "0" + hour.toString()
-            return test
-        }
-        return hour.toString()
-    })
-    return res
-}
-
-function filterDayOfAlarm(input:Alarm):Boolean {
+function filterDayOfAlarm(input:string[]):Boolean {
     let date = new Date();
-    // const dayOfTheWeek = joursSemaine[date.getDay()];
-    const dayOfTheWeek = DAYS[date.getDay()].key;
-    console.log("dayOfTheWeek", dayOfTheWeek)
-    if(input.jours[0]==="L/D"){
+    const dayOfTheWeek = joursSemaine[date.getDay()];
+    if(input[0]==="L/D"){
         return true;
-    } else if(input.jours[0]==="L/V"){
+    } else if(input[0]==="L/V"){
         if(dayOfTheWeek==="Samedi" || dayOfTheWeek==="Dimanche"){
             return false;
         } else {
             return true;
         }
-    } else if(input.jours.indexOf(dayOfTheWeek)!==-1){
-        return true;
-    } else {
+    } else if(input.indexOf(DAYS[date.getDay()].label)===-1){
         return false;
+    } else {
+        return true;
     }
 }
 
@@ -100,4 +89,34 @@ function getTimeDiff(alarmTime:string, timezone:string):number {
   return differenceMs;
 }
 
-export { minutesNumber, hourNumber, DAYS, filterDayOfAlarm , getTimeDiff}
+const allTimezones:allTZ = {
+  "Pacific/Honolulu": "Hawaii",
+  "America/Chicago": "Central Time",
+  "America/Mexico_City": "Guadalajara, Mexico City, Monterrey",
+  "America/Belize": "Central America",
+  "America/Detroit": "Eastern Time",
+  "America/Bogota": "Bogota, Lima, Quito",
+  "America/Los_Angeles": "Pacific Time",
+  GMT: "UTC",
+  "Europe/London": "Edinburgh, London",
+  "Europe/Dublin": "Dublin",
+  "Africa/Casablanca": "Casablanca, Monrovia",
+  "Europe/Brussels": "Brussels, Copenhagen, Madrid, Paris",
+  "Europe/Amsterdam": "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
+  "Africa/Algiers": "West Central Africa",
+  "Africa/Cairo": "Cairo",
+  "Europe/Moscow": "Istanbul, Moscow, St. Petersburg, Volgograd",
+  "Asia/Kuwait": "Kuwait, Riyadh",
+  "Africa/Nairobi": "Nairobi",
+  "Asia/Bangkok": "Bangkok, Hanoi, Jakarta",
+  "Asia/Shanghai": "Beijing, Chongqing, Hong Kong SAR, Urumqi",
+  "Asia/Kuala_Lumpur": "Kuala Lumpur, Singapore",
+  "Asia/Seoul": "Seoul",
+  "Asia/Tokyo": "Osaka, Sapporo, Tokyo",
+  "Australia/Sydney": "Canberra, Melbourne, Sydney",
+  "Asia/Vladivostok": "Vladivostok",
+  "Pacific/Fiji": "Fiji Islands",
+  "Pacific/Auckland": "Auckland, Wellington",
+};
+
+export {DAYS, filterDayOfAlarm , getTimeDiff, joursSemaine, mois, allTimezones}
