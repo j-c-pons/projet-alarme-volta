@@ -1,5 +1,10 @@
 {
   "name": "projet-front",
+    "author": {
+    "name": "Jean-Christophe Pons",
+    "email": "j-c_pons@hotmail.fr"
+  },
+  "description": "Application d'alarme",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
