@@ -1,6 +1,4 @@
 
-import {allTZ} from '../type/Alarm'
-
 //24h in ms
 const OneDaytoMS = 86400000
 
