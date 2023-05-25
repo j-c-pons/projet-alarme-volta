@@ -1,4 +1,4 @@
-### projet-alarme-volta
+# projet-alarme-volta
 
 
 ## Environnement de développement
@@ -14,14 +14,14 @@
 
 Pré-requis: Python, pip et venv
 
-# Créer l'environnement virtuel
+### Créer l'environnement virtuel
 
 ```
 cd projet-alarme-volta/projet-back
 python3 -m venv venv
 ```
 
-# Lancer l'evt virtuel
+### Lancer l'evt virtuel
 
 Windows (powershell)
 ```
@@ -33,13 +33,13 @@ Mac os/Unix (bash)
 venv/bin/activate
 ```
 
-# Installer les paquets du projet
+### Installer les paquets du projet
 
 ```
 pip install -r requirements.txt
 ```
 
-# Lancer le serveur
+### Lancer le serveur
 ```
 uvicorn main:app --reload
 ```
@@ -47,13 +47,13 @@ uvicorn main:app --reload
 
 ## Côté front
 
-# Installer les paquets
+### Installer les paquets
 ```
 cd projet-alarme-volta/projet-front
 npm install 
 ```
 
-# Lancement
+### Lancement
 Via electron
 ```
 npm run dev
