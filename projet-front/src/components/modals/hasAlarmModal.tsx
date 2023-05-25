@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from '@mui/material/Modal';
 import {modalSx, confirmBtnSx} from '../../style/muiStyle'
 import Box from '@mui/material/Box';
@@ -14,13 +14,9 @@ interface pauseAlarmProps {
 }
 
 const HasAlarmModal: React.FunctionComponent<pauseAlarmProps> = ({snooze, display, stopAlarmFn}) => {
-    const [open, setOpen] = useState(true);
-
-    // const handleOpen = () => setOpen(true);
 
     const handleClose = (event: React.MouseEvent<HTMLElement>) => {
         stopAlarmFn();
-        setOpen(false);
     };
 
     return createPortal(<div> 

@@ -5,12 +5,13 @@ import {DAYS} from '../utils/functions'
 interface ToggleDaysProps {
     handleFn:(event: React.MouseEvent<HTMLElement>, newDay: string) =>void, 
     currValue:string[]
-    style?:string
+    btnStyle?:string
 }
 
-const ToggleDays:React.FunctionComponent<ToggleDaysProps> = ({handleFn, currValue, style}) =>{ 
+const ToggleDays:React.FunctionComponent<ToggleDaysProps> = ({handleFn, currValue, btnStyle}) =>{ 
+    // Select the style to apply to the component (btnSx3 for addAlarm btns and btnSx for alarmItm btns)
     let groupStyle;
-    style==="add"? groupStyle = btnSx3 : groupStyle = btnSx;
+    btnStyle==="add"? groupStyle = btnSx3 : groupStyle = btnSx;
 
     return (
         <ToggleButtonGroup
@@ -26,7 +27,6 @@ const ToggleDays:React.FunctionComponent<ToggleDaysProps> = ({handleFn, currValu
                 </ToggleButton>
             ))}
         </ToggleButtonGroup>
-
   );
 }
 

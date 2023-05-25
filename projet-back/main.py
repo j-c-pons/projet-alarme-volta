@@ -56,8 +56,15 @@ def get_alarms():
     c.execute("SELECT * FROM alarms")
     alarms = c.fetchall()
     conn.close()
+
     if len(alarms):
         for alarm in alarms:
+            # change "active" from num to bool to avoid warnings int the front
+            if alarm["active"] == 1:
+                alarm["active"] = True 
+            else: 
+                alarm["active"] = False
+            #  decode "jours" from json to list
             alarm["jours"] = json.loads(alarm["jours"].decode('utf8'))
     return {"alarms": alarms}
 

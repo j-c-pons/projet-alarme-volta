@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import {useGlobalContext} from '../context/appContext';
 import useGetAlarmsService from '../service/getAlarms';
 import AlarmItm from './alarmItm';
@@ -13,7 +13,6 @@ let ring2 = new Audio("http://icecast.radiofrance.fr/fip-midfi.mp3");
 const CurrentAlarms: React.FunctionComponent = () => {
     const {result, setResult} = useGetAlarmsService();
     const alarmCtx= useGlobalContext();
-    const [chromeCheck, setChromeCheck] = useState(true);
     const [displayAlarm, setDisplayAlarm] = useState(false);
     const [snooze, setSnooze] = useState(false);
     const [sonnerieToSnooze, setSonnerieToSnooze] = useState("");
@@ -21,11 +20,10 @@ const CurrentAlarms: React.FunctionComponent = () => {
 
     useEffect(() => {
       if(snooze){
-        // new time out (5 min) in case an alarm is snoozed
-        const timer = setTimeout(() => {
+        // new timeOut (5 min) in case an alarm is snoozed
+        setTimeout(() => {
           startAlarm(sonnerieToSnooze);
         }, 300000); 
-
         setSnooze(false)
       }
     }, [snoozeTrigger]);
@@ -37,13 +35,8 @@ const CurrentAlarms: React.FunctionComponent = () => {
     }
 
     // display alarms after chromecheck on load
-    const updateResult=(res:boolean) => {
-      if(res){
-        setResult({ status: 'loaded' });
-      } else {
-        setChromeCheck(false)
-        setResult({ status: 'loaded' });
-      }
+    const updateResult=() => {
+      setResult({ status: 'loaded' });
     }
 
     const startAlarm = (sonnerie:string) => {  
@@ -83,7 +76,7 @@ const CurrentAlarms: React.FunctionComponent = () => {
       {result.status === 'chromeCheck' && <LoadAlarmModal openModal={true} callback={updateResult}/>}
       {result.status === 'loaded' && alarmCtx.data &&
         alarmCtx.data.map(alarm=>
-          <AlarmItm key={alarm.id} item={alarm} removeAlarm={removeAlarm} chromeCheck={chromeCheck} startAlarmFn={startAlarm}/>
+          <AlarmItm key={alarm.id} item={alarm} removeAlarm={removeAlarm} startAlarmFn={startAlarm}/>
         )
       }
       {result.status === 'error' && (<div>Error, something went wrong.</div>)}

@@ -18,7 +18,7 @@ Pré-requis: Python, pip et venv
 
 ```
 cd projet-alarme-volta/projet-back
-python3 -m venv venv
+python -m venv venv
 ```
 
 ### Lancer l'evt virtuel
@@ -61,6 +61,7 @@ npm run dev
 
 
 ## A finir/ améliorer
+* Optimiser la performance du code
+* Fonctionnalités à implémenter: rendre le rappel/répétition d'alarme persistant, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
 * Design à améliorer dans l'ensemble
-* A faire : rendre le rappel/répétition d'alarme persistant, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
 * Côté serveur: je n'ai pas eu le temps de le travailler, il y a beaucoup de choses qui manquent (ORM, gestion d'erreurs, documentation, etc)

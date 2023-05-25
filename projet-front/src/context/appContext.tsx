@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import {Alarm} from "../type/Alarm";
 
-interface Props{
+interface ctxProps{
   children: React.ReactNode;
 }
 
@@ -14,7 +14,7 @@ export type ctxInterface = {
 
 export const AlarmContext = createContext<ctxInterface>({} as ctxInterface);
 
-const ContextAlarmProvider = ({ children }:Props) => {
+const ContextAlarmProvider = ({ children }:ctxProps) => {
   const [data, setData] = useState<Alarm[]>([]);
   const [timezone, setTimezone] = useState("Europe/Brussels");
 

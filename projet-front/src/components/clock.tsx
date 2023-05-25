@@ -1,4 +1,4 @@
-import React,  { useState, useEffect } from "react";
+import { useState, useEffect, useMemo} from "react";
 import {useGlobalContext} from '../context/appContext';
 import { joursSemaine, mois } from "../utils/functions";
 import '../style/clock.css';
@@ -17,26 +17,33 @@ import '../style/clock.css';
       };
     }, []);
 
+    // clock HH:MM:SS
     const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: alarmCtx.timezone  });
-
-    // Créer une instance de l'objet Date
-    let date = new Date();
-
-
-    // Obtenir les composants de la date
-    let jourSemaine = joursSemaine[date.getDay()];
-    let jourNum = date.getDate();
-    let moisActuel = mois[date.getMonth()];
-    let annee = date.getFullYear();
-
+    
+    // Composants de la date
+    const jourSemaine = useMemo(()=>{
+      return joursSemaine[time.getDay()];
+    }, [time.getDay()])
+    const moisActuel = useMemo(()=>{
+      return mois[time.getMonth()];
+    }, [time.getMonth()])
+    const jourNum = useMemo(()=>{
+      return time.getDate();
+    }, [time.getDate()])
+    const annee = useMemo(()=>{
+      return time.getFullYear();
+    }, [time.getFullYear()])
+    
     // Construire la chaîne de caractères pour afficher la date
-    let dateFormatee = jourSemaine + " " + jourNum + " " + moisActuel + " " + annee;
+    const date = useMemo(()=>{
+      return jourSemaine + " " + jourNum + " " + moisActuel + " " + annee;
+    }, [jourSemaine, jourNum, moisActuel, annee])
 
   return (
     <div>
       <div className="clock clock_center">{formattedTime}</div>
       <div className="date">
-        {dateFormatee}        
+        {date}        
       </div>
       <div className="tz">Timezone: {alarmCtx.timezone}</div> 
     </div>

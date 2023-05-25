@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import usePostAlarmService from '../service/postAlarm';
 import '../style/clock.css';
 import ToggleDays from "./toggleDays"
@@ -24,7 +24,7 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const sentRef = useRef<Boolean>(false);
     const [days, setDays] = useState(["L/D"]);
 
-    // callback for toggle days comp
+    // callback for toggleDays component, updates the active days of the alarm
     const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string) => {
         if(newDay==="L/D"|| newDay==="L/V"){
             setDays([newDay]);
@@ -59,7 +59,6 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
         } else {
             setDisableSave(false)
         }
-
     }
 
     const updateSonnerie = (event:SelectChangeEvent)=>{
@@ -69,7 +68,7 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     return <div>
         {!sentRef.current && <div className="flex">
             <input className="newAlarmInput" type="time" onChange={enableSave} ref={inputRef} />
-            <ToggleDays handleFn={handleDays} currValue={days} style={"add"}/>
+            <ToggleDays handleFn={handleDays} currValue={days} btnStyle={"add"}/>
             <Box>
                 <Select
                 value={sonnerie}

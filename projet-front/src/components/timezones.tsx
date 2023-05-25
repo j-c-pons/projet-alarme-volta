@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -7,14 +6,12 @@ import { useGlobalContext } from "../context/appContext";
 import { useTimezoneSelect, allTimezones } from 'react-timezone-select'
 
 const labelStyle = 'original'
-const timezones = {
-  ...allTimezones,
-  'Europe/Berlin': 'Frankfurt'
-}
+
 const SelectTimezone: React.FunctionComponent = () => {
   const alarmCtx= useGlobalContext();
-  const { options, parseTimezone } = useTimezoneSelect({ labelStyle, timezones })
+  const { options } = useTimezoneSelect({ labelStyle, ...allTimezones })
 
+  // Update the app's selected tz (to update the alarms)
   const handleChange = (event: SelectChangeEvent) => {
     alarmCtx.setTimezone(event.target.value as string);
   };
@@ -26,12 +23,11 @@ const SelectTimezone: React.FunctionComponent = () => {
           onChange={handleChange}
           MenuProps={{PaperProps:{sx:paperSx}}}
           sx={selectSx}>
-
-          {options.map((option, idx) => (
-            <MenuItem sx={menuItemSx} key={idx} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+            {options.map((option, idx) => (
+              <MenuItem sx={menuItemSx} key={idx} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
         </Select>
     </Box>
   );

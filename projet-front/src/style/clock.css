@@ -37,6 +37,10 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+.deleteBtn{
+  cursor: pointer;
+  height:23px;
+}
 
 /* addAlarm */
 .disableSave{

@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import Modal from '@mui/material/Modal';
 import {modalSx, confirmBtnSx} from '../../style/muiStyle'
 import Box from '@mui/material/Box';
-import { FcAlarmClock } from "react-icons/fc";
 import {useGlobalContext} from '../../context/appContext';
 import '../../style/clock.css';
 import Button from '@mui/material/Button';
@@ -10,21 +9,23 @@ import {createPortal} from 'react-dom';
 
 interface loadAlarmProps {
   openModal:boolean
-  callback:(res:boolean)=>void
+  callback:()=>void
 }
  
 const LoadAlarmModal: React.FunctionComponent<loadAlarmProps> = ({openModal, callback}) => {
     const alarmCtx= useGlobalContext();
-    const [open, setOpen] = useState(true);
 
     const handleYes = (event: React.MouseEvent<HTMLElement>) => {
-      callback(true);
-      setOpen(false);
+      callback();
     };
 
     const handleNo = (event: React.MouseEvent<HTMLElement>) => {
-      callback(false);
-      setOpen(false);
+      callback();
+      alarmCtx.setData((prev)=>{
+        let dataToLoop = prev;
+        dataToLoop.forEach((itm)=>{itm.active=false})
+        return dataToLoop;
+      })
     };
 
     return createPortal( 

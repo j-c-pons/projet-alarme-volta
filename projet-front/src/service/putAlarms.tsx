@@ -4,7 +4,7 @@ const UsePutAlarmService = (_id: number, _active?:boolean, _jours?:string[]) => 
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     
     let json= JSON.stringify({ alarm_id: _id, jours:_jours,  active:_active})
-    console.log(json)
+
     return new Promise((resolve, reject) => {
     const urlPost = process.env.REACT_APP_URL_BACK+"update_alarm";
 
