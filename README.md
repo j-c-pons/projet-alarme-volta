@@ -18,7 +18,7 @@ Pré-requis: Python, pip et venv
 
 ```
 cd projet-alarme-volta/projet-back
-python -m venv venv
+python -m venv env
 ```
 
 ### Lancer l'evt virtuel
@@ -30,7 +30,7 @@ env\Scripts\activate
 
 Mac os/Unix (bash)
 ```
-venv/bin/activate
+env/bin/activate
 ```
 
 ### Installer les paquets du projet
