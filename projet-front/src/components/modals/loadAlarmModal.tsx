@@ -17,15 +17,15 @@ const LoadAlarmModal: React.FunctionComponent<loadAlarmProps> = ({openModal, cal
 
     const handleYes = (event: React.MouseEvent<HTMLElement>) => {
       callback();
-    };
-
-    const handleNo = (event: React.MouseEvent<HTMLElement>) => {
-      callback();
       alarmCtx.setData((prev)=>{
         let dataToLoop = prev;
         dataToLoop.forEach((itm)=>{itm.active=false})
         return dataToLoop;
       })
+    };
+
+    const handleNo = (event: React.MouseEvent<HTMLElement>) => {
+      callback();
     };
 
     return createPortal( 
@@ -36,9 +36,11 @@ const LoadAlarmModal: React.FunctionComponent<loadAlarmProps> = ({openModal, cal
         aria-describedby="modal-modal-description"
       >
         <Box className="flex" sx={modalSx}>
-            <div className="modalTxt">Voulez-vous activer les alarmes enregistrées ?</div>
-            <Button sx={confirmBtnSx} onClick={handleYes}>Oui</Button>
-            <Button sx={confirmBtnSx} onClick={handleNo}>Non</Button>
+            <div className="modalTxt">Voulez-vous désactiver les alarmes précédemment enregistrées ?</div>
+            <div>
+              <Button sx={confirmBtnSx} onClick={handleYes}>Oui</Button>
+              <Button sx={confirmBtnSx} onClick={handleNo}>Non</Button>
+            </div>
         </Box>
       </Modal>
     , document.body)
