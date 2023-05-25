@@ -4,15 +4,12 @@
     font-family: "clock-font" ;
     font-size:35px;
 }
-
 .clock_center{
     font-size:200px;
 }
-
 .date{
   font-size: 40px;
 }
-
 .tz{
   margin-top: 10px;;
   font-size: 20px;
@@ -32,186 +29,118 @@
 .alarmTime{
   margin-right: 10px;
 }
+.react-switch-handle{
+  background: black !important;
+}
+
+.switchComp{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* addAlarm */
+.disableSave{
+  text-align: center;
+}
+.newAlarmInput{
+  background-color: black;
+  color: red;
+  border-color: red;
+  width: 126px;
+  height: 33px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.newAlarmInput:focus {
+  outline: none;
+  cursor: pointer;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  outline: none;
+  filter: invert(15%) sepia(89%) saturate(6781%) hue-rotate(0deg) brightness(93%) contrast(118%);
+  color:red;
+}
+.MuiOutlinedInput-notchedOutline {
+  border-width: 1px !important;
+  border-color: red !important;
+  color:red;
+  background-color: "black" !important;    
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  background-color: "black" !important;
+  outline: none !important;
+  font-size: 17px !important;
+}
+.saveBtn{
+  margin-top:15px;
+  cursor: pointer;
+}
+.MenuItem{
+  margin-left: 2px !important;
+  margin-right: 2px !important;
+}
+
+/* Timezones */
+.tzBlock{
+  text-align: -webkit-center;
+  /* text-align: center; */
+}
+
+/* MODALS */
+.modalTxt{
+  margin-bottom: 10px;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.postSend{
+  text-align:center;
+}
 
 
+/* HAS ALARM MODAL */
+.alarm-icon {
+  font-size: 100px;
+  left: -25px;
+  top: -20px;
+  animation: alarm 2s infinite alternate;
+  margin-bottom: 30px;
+}
+
+@keyframes alarm {
+  0%,
+  100% {
+    transform: scale3d(1, 1, 1);
+    text-shadow: 0 0 0 transparent;
+  }
+  10%,
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -6deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 6deg);
+    text-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -6deg);
+  }
+}
 
 
 select{
-    color:red;
-    font-size: 12px;
-    background-color: black;
-    border-color: red;
+  color:red;
+  font-size: 12px;
+  background-color: black;
+  border-color: red;
 }
-
-.test{
-    color:red;
-    font-size: 30px;
-    background-color: black;
-    border-color: red;
-}
-
-.css-13cymwt-control{
-    color:red;
-    font-size: 30px;
-    background-color: black;
-    border-color: red; 
-}
-
-.css-1xc3v61-indicatorContainer{
-    color:red !important;
-
-}
-
-.css-1u9des2-indicatorSeparator{
-    background-color:red !important;
-
-}
-
-.deux{
-    width: 50%;
-}
-
-.deux span {
-    background-color: red !important;
-    /* font-family: monospace; */
-  }
-
-
-
-.newAlarmInput{
-    background-color: black;
-    color: red;
-    border-color: red;
-    /* border-top-right-radius:15%; */
-
-}
-
-.saveBtn{
-    margin-top:15px;
-    cursor: pointer;
-}
-
-input[type="time"]::-webkit-calendar-picker-indicator {
-    /* /* -webkit-filter:hue-rotate(0deg); */
-    filter: invert(15%) sepia(89%) saturate(6781%) hue-rotate(0deg) brightness(93%) contrast(118%);
-    color:red;
- }
-
- .tzBlock{
-    text-align: -webkit-center;
-    /* text-align: center; */
- }
-
- .react-switch-handle{
-    background: black !important;
- }
-
- .switchComp{
-    padding-left: 15px;
-    padding-right: 15px;
- }
-
-
- 
- .newAlarmInput:focus {
-    /* -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none; */
-    outline: none;
-    /* text-align: center;
-    border: 1px solid #dddddd;
-    border-radius: 6px;
-    padding: 6px 10px; */
-    background: black;
-    /* cursor: pointer;
-    font-family: 'Heebo', sans-serif; */
-}
-
-.MenuItem{
-    margin-left: 2px !important;
-    margin-right: 2px !important;
-
-}
-/* .MenuItem.Mui-selected {
-    background: red ! important;
-    color: black !important;
-    border-radius: 50% !important;
-}
-.MenuItem.Mui:hover {
-
-    border-radius: 50% !important;
-} */
-
-  /* .MenuItem.MuiButtonBase-root-MuiToggleButton-root.Mui-selected{
-    color:chartreuse;
-  } */
-
-
-
-
-  .MuiOutlinedInput-notchedOutline {
-    border-width: 1px !important;
-    border-color: red !important;
-    color:red;
-    background-color: "black" !important;
-    /* height: 30px; */
-    
-  }
-  
-  .Mui-focused .MuiOutlinedInput-notchedOutline {
-    /* border-color: red !important; */
-    background-color: "black" !important;
-  }
-
-
-
-  /* MODALS */
-  .modalTxt{
-    margin-bottom: 10px;
-  }
-
-  .flex{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .postSend{
-    text-align:center;
-  }
-
-
-  /* HAS ALARM MODAL */
-  .alarm-icon {
-    /* position: absolute; */
-    font-size: 100px;
-    left: -25px;
-    top: -20px;
-    animation: alarm 2s infinite alternate;
-    margin-bottom: 30px;
-  }
-  
-  @keyframes alarm {
-    0%,
-    100% {
-      transform: scale3d(1, 1, 1);
-      text-shadow: 0 0 0 transparent;
-    }
-    10%,
-    20% {
-      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -6deg);
-    }
-    30%,
-    50%,
-    70%,
-    90% {
-      transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 6deg);
-      text-shadow: 0 1px 3px rgb(0 0 0 / 30%);
-    }
-    40%,
-    60%,
-    80% {
-      transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -6deg);
-    }
-  }

@@ -19,20 +19,20 @@ interface alarmItemProps {
 
 const AlarmItm: React.FunctionComponent<alarmItemProps> = ({item, removeAlarm, chromeCheck, startAlarmFn}) => {
     const alarmCtx= useGlobalContext();
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(item.active);
     const [days, setDays] = useState(item.jours);
     const daysRref = useRef(false)
 
-    useEffect(() => {
-      //  switch off alarms on load
-      if(item.active===false || !chromeCheck){
-        setChecked(false)
-      };
-    }, []);
+    // useEffect(() => {
+    //   //  switch off alarms on load
+    //   if(item.active===false || !chromeCheck){
+    //     setChecked(false)
+    //   };
+    // }, []);
 
+    // update db if selected days change
     useEffect(() => {
       if(daysRref.current){
-        console.log("test")
         UsePutAlarmService(item.id, checked, days);
       }
     }, [days]);
@@ -52,7 +52,7 @@ const AlarmItm: React.FunctionComponent<alarmItemProps> = ({item, removeAlarm, c
   
     }, [checked, alarmCtx.timezone, days]);
  
-
+    // update db if active change
     const handleChange = (val:boolean) => {
       setChecked(val)
       UsePutAlarmService(item.id, val, days);
@@ -63,6 +63,7 @@ const AlarmItm: React.FunctionComponent<alarmItemProps> = ({item, removeAlarm, c
       removeAlarm(item.id)
     }
 
+    // callback fn for toggleDay comp
     const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string) => {
       if(newDay==="L/D"|| newDay==="L/V"){
           setDays([newDay]);

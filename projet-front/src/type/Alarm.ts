@@ -1,9 +1,10 @@
+// Alarm
 export type Sonnerie = "Sonnerie classique" | "Sonnerie FM" ;
 
 export interface Alarm {
     id: number;
     time: string;
-    active:boolean | string;
+    active:boolean;
     sonnerie:Sonnerie ;
     jours:string[];
 }
@@ -15,6 +16,7 @@ export interface postAlarm {
     alarm_id: number;
 }
 
+// Service
 interface ServiceInit {
   status: 'init';
 }
@@ -45,6 +47,6 @@ export type Service<T> =
   | ServiceLoaded
   | ServiceError;
 
-  export interface allTZ {
-    [key: string]: string;
+export interface allTZ {
+  [key: string]: string;
 }

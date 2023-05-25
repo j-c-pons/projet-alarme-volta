@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from '@mui/material/Modal';
-import {modalSx, confirmBtnSx} from '../../style/form'
+import {modalSx, confirmBtnSx} from '../../style/muiStyle'
 import Box from '@mui/material/Box';
 import { FcAlarmClock } from "react-icons/fc";
 import '../../style/clock.css';

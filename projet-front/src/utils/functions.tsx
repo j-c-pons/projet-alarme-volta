@@ -46,6 +46,7 @@ const DAYS = [
     }
   ];
 
+// check if the alarm is set for today, if so return true, else false
 function filterDayOfAlarm(input:string[]):Boolean {
     let date = new Date();
     const dayOfTheWeek = joursSemaine[date.getDay()];
@@ -64,6 +65,7 @@ function filterDayOfAlarm(input:string[]):Boolean {
     }
 }
 
+// calculate time remaining between now and alarm start in ms
 function getTimeDiff(alarmTime:string, timezone:string):number {
 
   // Récupérer l'heure de la tz choisie
@@ -89,34 +91,4 @@ function getTimeDiff(alarmTime:string, timezone:string):number {
   return differenceMs;
 }
 
-const allTimezones:allTZ = {
-  "Pacific/Honolulu": "Hawaii",
-  "America/Chicago": "Central Time",
-  "America/Mexico_City": "Guadalajara, Mexico City, Monterrey",
-  "America/Belize": "Central America",
-  "America/Detroit": "Eastern Time",
-  "America/Bogota": "Bogota, Lima, Quito",
-  "America/Los_Angeles": "Pacific Time",
-  GMT: "UTC",
-  "Europe/London": "Edinburgh, London",
-  "Europe/Dublin": "Dublin",
-  "Africa/Casablanca": "Casablanca, Monrovia",
-  "Europe/Brussels": "Brussels, Copenhagen, Madrid, Paris",
-  "Europe/Amsterdam": "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
-  "Africa/Algiers": "West Central Africa",
-  "Africa/Cairo": "Cairo",
-  "Europe/Moscow": "Istanbul, Moscow, St. Petersburg, Volgograd",
-  "Asia/Kuwait": "Kuwait, Riyadh",
-  "Africa/Nairobi": "Nairobi",
-  "Asia/Bangkok": "Bangkok, Hanoi, Jakarta",
-  "Asia/Shanghai": "Beijing, Chongqing, Hong Kong SAR, Urumqi",
-  "Asia/Kuala_Lumpur": "Kuala Lumpur, Singapore",
-  "Asia/Seoul": "Seoul",
-  "Asia/Tokyo": "Osaka, Sapporo, Tokyo",
-  "Australia/Sydney": "Canberra, Melbourne, Sydney",
-  "Asia/Vladivostok": "Vladivostok",
-  "Pacific/Fiji": "Fiji Islands",
-  "Pacific/Auckland": "Auckland, Wellington",
-};
-
-export {DAYS, filterDayOfAlarm , getTimeDiff, joursSemaine, mois, allTimezones}
+export {DAYS, filterDayOfAlarm , getTimeDiff, joursSemaine, mois}

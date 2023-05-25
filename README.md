@@ -1,15 +1,13 @@
 ### projet-alarme-volta
 
 
-## Environnement de test
+## Environnement de développement
 
-Windows 11
-Python 3.10.1
-Pip 23.1.2
-React 18.2.0
-Npm 8.1.2
-Navigateurs: Chrome, Firefox
-
+* Windows 11
+* Python 3.10.1
+* Pip 23.1.2
+* React 18.2.0
+* Npm 8.1.2
 
 
 ## Côté back
@@ -61,11 +59,10 @@ Via electron
 npm run dev
 ```
 
-Via un navigateur
-```
-npm start
-```
 
 ## A finir/ améliorer
+* Design à améliorer dans l'ensemble
+* A faire : rendre le rappel/répétition d'alarme persistant, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
+* Côté serveur: je n'ai pas eu le temps de le travailler, il y a beaucoup de choses qui manquent (ORM, gestion d'erreurs, documentation, etc)
 
 <!-- https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json -->

@@ -9,7 +9,7 @@ import { useGlobalContext } from "../context/appContext";
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {selectSx, menuItemSx, paperSx} from '../style/form'
+import {selectSx, menuItemSx, paperSx} from '../style/muiStyle'
 
 interface modalProps {
     handleClose:(event: React.MouseEvent<HTMLElement>) => void
@@ -20,15 +20,16 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     const {service, postAlarm} = usePostAlarmService();
     const [sonnerie, setSonnerie] = useState<Sonnerie>("Sonnerie classique");
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const [timeNull, setTimeNull] = useState<boolean>(true);
+    const [disableSave, setDisableSave] = useState<boolean>(true);
     const sentRef = useRef<Boolean>(false);
     const [days, setDays] = useState(["L/D"]);
 
+    // callback for toggle days comp
     const handleDays = (event: React.MouseEvent<HTMLElement>, newDay: string) => {
         if(newDay==="L/D"|| newDay==="L/V"){
             setDays([newDay]);
         } else if(days.includes("L/D") || days.includes("L/V")){
-            setDays((curr)=> [...curr.filter(d=> d!="L/D").filter(d=>d!=="L/V"), newDay]);
+            setDays((curr)=> [...curr.filter(d=> d!=="L/D").filter(d=>d!=="L/V"), newDay]);
         } else if(!days.includes(newDay)){
             setDays((curr)=> [...curr, newDay]);
         } else {
@@ -48,9 +49,17 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
         }
     }
 
-    const updateTimeNull = (event:React.ChangeEvent<HTMLInputElement>)=>{
-        if(inputRef.current)
-            setTimeNull(false)
+    // disable save if no time has been defined or if there is already an alarm at this time
+    const enableSave = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        var result = alarmCtx.data.filter(obj => {
+            return obj.time === inputRef.current?.value
+          })
+        if(inputRef.current && result.length!==0){
+            setDisableSave(true)
+        } else {
+            setDisableSave(false)
+        }
+
     }
 
     const updateSonnerie = (event:SelectChangeEvent)=>{
@@ -58,10 +67,9 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
     }
 
     return <div>
-        {!sentRef.current &&
-            <div className="flex">
-            <input className="newAlarmInput" type="time" onChange={updateTimeNull} ref={inputRef} />
-            <ToggleDays handleFn={handleDays} currValue={days}/>
+        {!sentRef.current && <div className="flex">
+            <input className="newAlarmInput" type="time" onChange={enableSave} ref={inputRef} />
+            <ToggleDays handleFn={handleDays} currValue={days} style={"add"}/>
             <Box>
                 <Select
                 value={sonnerie}
@@ -72,7 +80,8 @@ const AddAlarm:React.FunctionComponent<modalProps> = ({handleClose}) => {
                     <MenuItem sx={menuItemSx} value={"Sonnerie FM"}>Sonnerie FM</MenuItem>
                 </Select>
             </Box>
-            <button className="newAlarmInput saveBtn" disabled={timeNull} onClick={addAlarm}>Enregistrer</button>
+            {disableSave && <div className="disableSave">Vous devez choisir une heure qui n'a pas déjà été choisie.</div>}
+            <button className="newAlarmInput saveBtn" disabled={disableSave} onClick={addAlarm}>Enregistrer</button>
         </div>
         } 
         {service.status === 'loading' && <div  className="postSend">En cours d'envoi...</div>}

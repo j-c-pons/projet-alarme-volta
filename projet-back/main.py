@@ -14,12 +14,10 @@ import json
 app = FastAPI()
 db_path = "alarms.db"
 
-
 app = FastAPI()
 
 origins = [
     "http://localhost:3000",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
 ]
@@ -31,11 +29,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
 def create_alarm_table():
     conn = sqlite3.connect(db_path)
@@ -49,10 +42,12 @@ def create_alarm_table():
     conn.commit()
     conn.close()
 
+# Create DB if it doesn't exist
 @app.on_event("startup")
 def startup_event():
     create_alarm_table()
   
+# Get all the alarms
 @app.get("/get_alarms")
 def get_alarms():
     conn = sqlite3.connect(db_path)
@@ -66,6 +61,7 @@ def get_alarms():
             alarm["jours"] = json.loads(alarm["jours"].decode('utf8'))
     return {"alarms": alarms}
 
+# Create a new alarm, expect a request with a json body  (keys:"time", "sonnerie") and return the new alarm's id
 @app.post("/create_alarm")
 async def create_alarm(request:Request):
     da = await request.json()
@@ -78,14 +74,11 @@ async def create_alarm(request:Request):
     conn.close()
     return {"alarm_id": alarm_id}
 
+# Update an alarm, expect a request with a json body (keys:"active", "jours", "alarm_id")
 @app.put("/update_alarm")
 async def update_alarm(request:Request):
     da = await request.json()
-    print("PUT1", da["jours"])
-    # print("PUT1", type(da["jours"]))
-
     listToJson = json.dumps(da["jours"]).encode('utf8')
-    print("PUT2", listToJson)
 
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
@@ -94,6 +87,7 @@ async def update_alarm(request:Request):
     conn.close()
     return {"message": "Alarm updated"}
 
+# Delete an alarm, expect the id of the alarm to delete as a query string parameter
 @app.delete("/delete_alarm")
 def delete_alarm(alarm_id: int):
     conn = sqlite3.connect(db_path)

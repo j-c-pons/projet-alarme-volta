@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import '../../style/clock.css';
 import AddAlarm from '../addAlarm';
-import {modalSx, btnSx2} from '../../style/form'
+import {modalSx, btnSx2} from '../../style/muiStyle'
 
 const AddItemModal: React.FunctionComponent = () => {
   const [open, setOpen] = React.useState(false);

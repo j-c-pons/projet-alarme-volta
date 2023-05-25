@@ -36,6 +36,7 @@ const CurrentAlarms: React.FunctionComponent = () => {
       );
     }
 
+    // display alarms after chromecheck on load
     const updateResult=(res:boolean) => {
       if(res){
         setResult({ status: 'loaded' });
