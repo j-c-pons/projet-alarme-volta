@@ -5,7 +5,7 @@
 
 * Windows 11
 * Python 3.10.1
-* Pip 23.1.2
+* Pip 21.2.4
 * React 18.2.0
 * Npm 8.1.2
 
