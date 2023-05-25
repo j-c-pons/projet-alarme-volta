@@ -93,6 +93,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 /* MODALS */
 .modalTxt{
+  text-align: center;
   margin-bottom: 10px;
 }
 
