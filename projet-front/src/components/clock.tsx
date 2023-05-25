@@ -21,18 +21,10 @@ import '../style/clock.css';
     const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: alarmCtx.timezone  });
     
     // Composants de la date
-    const jourSemaine = useMemo(()=>{
-      return joursSemaine[time.getDay()];
-    }, [time.getDay()])
-    const moisActuel = useMemo(()=>{
-      return mois[time.getMonth()];
-    }, [time.getMonth()])
-    const jourNum = useMemo(()=>{
-      return time.getDate();
-    }, [time.getDate()])
-    const annee = useMemo(()=>{
-      return time.getFullYear();
-    }, [time.getFullYear()])
+    const jourSemaine = joursSemaine[time.getDay()];
+    const moisActuel = mois[time.getMonth()];
+    const jourNum = time.getDate();
+    const annee =  time.getFullYear();
     
     // Construire la chaîne de caractères pour afficher la date
     const date = useMemo(()=>{
