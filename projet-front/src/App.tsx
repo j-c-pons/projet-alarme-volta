@@ -2,7 +2,6 @@ import React from 'react';
 import Clock from './components/clock';
 import ContextAlarmProvider from './context/appContext';
 import CurrentAlarms from './components/currentAlarms'
-// import TimeZone from './components/timezoneSelect';
 import SelectTimezone from './components/timezones'
 import AddItemModal from './components/modals/addItemModal'
 import './style/App.css';
@@ -14,7 +13,6 @@ const App: React.FunctionComponent = () => {
     <ContextAlarmProvider>
       <div className='App'>
         <Clock />
-        {/* <TimeZone updateTZ={updateTZ} /> */}
         <SelectTimezone />
         <AddItemModal />
         <CurrentAlarms />

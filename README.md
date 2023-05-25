@@ -64,5 +64,3 @@ npm run dev
 * Design à améliorer dans l'ensemble
 * A faire : rendre le rappel/répétition d'alarme persistant, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
 * Côté serveur: je n'ai pas eu le temps de le travailler, il y a beaucoup de choses qui manquent (ORM, gestion d'erreurs, documentation, etc)
-
-<!-- https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json -->
