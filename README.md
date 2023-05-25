@@ -12,7 +12,7 @@
 
 ## Côté back
 
-Pré-requis: Python, pip et venv
+Pré-requis: Python, pip et virtualenv
 
 ### Créer l'environnement virtuel
 
