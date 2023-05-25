@@ -62,6 +62,6 @@ npm run dev
 
 ## A finir/ améliorer
 * Optimiser la performance du code
-* Fonctionnalités à implémenter: rendre le rappel/répétition d'alarme persistant, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
+* Fonctionnalités à implémenter: rendre le rappel d'alarme persistant, annuler un éventuel rappel quand on désactive l'alarme, ajouter plus de sonneries, ajout d'un chronomètre/minuteur
 * Design à améliorer dans l'ensemble
 * Côté serveur: je n'ai pas eu le temps de le travailler, il y a beaucoup de choses qui manquent (ORM, gestion d'erreurs, documentation, etc)
