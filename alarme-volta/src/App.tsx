@@ -1,4 +1,6 @@
-import React from 'react';
+import * as ReactDOM from 'react-dom';
+import { createRoot } from "react-dom/client";
+
 import Clock from './components/clock';
 import ContextAlarmProvider from './context/appContext';
 import CurrentAlarms from './components/currentAlarms'
@@ -8,8 +10,7 @@ import './style/App.css';
 import './style/clock.css';
 
 const App: React.FunctionComponent = () => {
-  
-  return (
+  return(
     <ContextAlarmProvider>
       <div className='App'>
         <Clock />
@@ -18,8 +19,9 @@ const App: React.FunctionComponent = () => {
         <CurrentAlarms />
       </div>
     </ContextAlarmProvider>
-
   );
 };
 
-export default App;
+
+const container = document.getElementById("root");
+createRoot(container).render(<App />);

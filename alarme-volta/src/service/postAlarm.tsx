@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {postAlarm, Sonnerie, Service} from "../type/Alarm";
 
-
 const usePostAlarmService = () => {
   const [service, setService] = useState<Service<postAlarm>>({
     status: 'init'
@@ -16,7 +15,7 @@ const usePostAlarmService = () => {
     let json= JSON.stringify({ time: time, sonnerie:sonnerie, jours:jours})
 
     return new Promise((resolve, reject) => {
-    const urlPost = process.env.REACT_APP_URL_BACK+"create_alarm";
+    const urlPost = "http://127.0.0.1:8000/create_alarm";
 
       fetch(urlPost, {
         method: 'POST',

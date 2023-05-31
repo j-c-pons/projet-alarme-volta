@@ -8,13 +8,12 @@ const useGetAlarmsService = () => {
   const [result, setResult] = useState<Service<ServiceLoaded>>({
     status: 'loading',
   });
-
-  const urlBack = process.env.REACT_APP_URL_BACK+"get_alarms";
+  const urlGet = "http://127.0.0.1:8000/get_alarms";
 
   useEffect(() => {
     let ignore = false;
     function getAlarms(){
-      fetch(urlBack)
+      fetch(urlGet)
       .then(response => response.json())
       .then(response => {
         if (!ignore) {

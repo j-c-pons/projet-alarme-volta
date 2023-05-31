@@ -10,6 +10,7 @@ export type ctxInterface = {
   setData:React.Dispatch<React.SetStateAction<Alarm[]>>
   timezone:string
   setTimezone:React.Dispatch<React.SetStateAction<string>>
+  urlBack:string
 }
 
 export const AlarmContext = createContext<ctxInterface>({} as ctxInterface);
@@ -17,7 +18,7 @@ export const AlarmContext = createContext<ctxInterface>({} as ctxInterface);
 const ContextAlarmProvider = ({ children }:ctxProps) => {
   const [data, setData] = useState<Alarm[]>([]);
   const [timezone, setTimezone] = useState("Europe/Brussels");
-
+  const urlBack = "http://127.0.0.1:8000/";
   return (
     <AlarmContext.Provider
       value={{
@@ -25,6 +26,7 @@ const ContextAlarmProvider = ({ children }:ctxProps) => {
         setData,
         timezone, 
         setTimezone,
+        urlBack
       }}
     >
       {children}
